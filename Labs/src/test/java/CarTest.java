@@ -22,7 +22,7 @@ class CarTest {
                 car.turnRight();
 
             sum += r;
-            assertEquals(sum % 360, car.getDirection());
+            assertEquals(sum % 360, car.dir;
         }
     }
 

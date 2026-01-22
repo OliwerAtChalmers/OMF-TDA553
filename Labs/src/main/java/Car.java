@@ -4,7 +4,7 @@ public class Car implements Movable{
     public double dx;
     public double dy;
     public int dir;
-    
+
     protected int nrDoors; // Number of doors on the car
     protected double enginePower; // Engine power of the car
     protected Color color; // Color of the car
