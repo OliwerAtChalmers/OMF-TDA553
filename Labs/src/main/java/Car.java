@@ -1,15 +1,16 @@
 import java.awt.*;
 
 public class Car implements Movable{
+    public double dx;
+    public double dy;
+    public int dir;
+    
     protected int nrDoors; // Number of doors on the car
     protected double enginePower; // Engine power of the car
     protected Color color; // Color of the car
     protected String modelName; // The car model name
 
     private double currentSpeed; // The current speed of the car
-    private double dx;
-    private double dy;
-    private int dir;
 
     public Car(){
         dx = 0;
@@ -51,10 +52,6 @@ public class Car implements Movable{
 
     public void setColor(Color clr){
         color = clr;
-    }
-
-    public int getDirection(){
-        return dir;
     }
 
     public void startEngine(){
