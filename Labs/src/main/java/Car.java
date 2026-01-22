@@ -9,7 +9,7 @@ public class Car implements Movable{
     private double currentSpeed; // The current speed of the car
     private double dx;
     private double dy;
-    private double dir;
+    private int dir;
 
     public Car(){
         dx = 0;
@@ -51,6 +51,10 @@ public class Car implements Movable{
 
     public void setColor(Color clr){
         color = clr;
+    }
+
+    public int getDirection(){
+        return dir;
     }
 
     public void startEngine(){
