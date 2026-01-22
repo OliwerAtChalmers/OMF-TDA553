@@ -15,6 +15,7 @@ public class Car implements Movable{
         dx = 0;
         dy = 0;
         dir = 0;
+        stopEngine();
     }
 
     public void move(){
@@ -65,6 +66,14 @@ public class Car implements Movable{
         return enginePower * 0.01;
     }
 
+    public double getEnginePower(){
+        return enginePower;
+    }
+
+    public double getCurrentSpeed(){
+        return currentSpeed;
+    }
+    
     private void incrementSpeed(double amount){
         currentSpeed = Math.min(getCurrentSpeed() + speedFactor() * amount, enginePower);
     }
@@ -73,11 +82,4 @@ public class Car implements Movable{
         currentSpeed = Math.max(getCurrentSpeed() - speedFactor() * amount,0);
     }
 
-    private double getEnginePower(){
-        return enginePower;
-    }
-
-    private double getCurrentSpeed(){
-        return currentSpeed;
-    }
 }
