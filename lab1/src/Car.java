@@ -20,8 +20,8 @@ public class Car implements Movable{
 
     public void move(){
         double rad = Math.toRadians(dir);
-        dx += Math.sin(rad) * getCurrentSpeed();
-        dy += Math.cos(rad) * getCurrentSpeed();
+        dx += Math.cos(rad) * getCurrentSpeed();
+        dy += Math.sin(rad) * getCurrentSpeed();
     }
 
     public void turnLeft(){
@@ -73,7 +73,7 @@ public class Car implements Movable{
     public double getCurrentSpeed(){
         return currentSpeed;
     }
-    
+
     private void incrementSpeed(double amount){
         currentSpeed = Math.min(getCurrentSpeed() + speedFactor() * amount, enginePower);
     }
