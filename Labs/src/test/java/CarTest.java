@@ -11,10 +11,21 @@ class CarTest {
 
     @org.junit.jupiter.api.Test
     void turnLeft() {
+        car.dir = 0;
+        int sum = 0;
+        for (int i = 0; i < 100; i++){
+            int r = (int)(Math.random() * 1080);
+            for (int j = 0; j < r; j++)
+                car.turnLeft();
+
+            sum -= r;
+            assertEquals(((sum % 360) + 360) % 360, car.dir);
+        }
     }
 
     @org.junit.jupiter.api.Test
     void turnRight() {
+        car.dir = 0;
         int sum = 0;
         for (int i = 0; i < 100; i++){
             int r = (int)(Math.random() * 1080);
@@ -22,7 +33,7 @@ class CarTest {
                 car.turnRight();
 
             sum += r;
-            assertEquals(sum % 360, car.dir;
+            assertEquals(sum % 360, car.dir);
         }
     }
 

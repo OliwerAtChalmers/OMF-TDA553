@@ -25,7 +25,7 @@ public class Car implements Movable{
     }
 
     public void turnLeft(){
-        dir = (dir - 1) % 360;
+        dir = (((dir - 1) % 360) + 360) % 360;
     }
 
     public void turnRight(){
