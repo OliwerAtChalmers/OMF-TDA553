@@ -59,9 +59,21 @@ class CarTest {
 
     @org.junit.jupiter.api.Test
     void gas() {
+        car.currentSpeed = 0;
+        car.enginePower = 100;
+        car.gas(-100);
+        assertEquals(0, car.currentSpeed);
+        car.gas(1000000);
+        assertEquals(1, car.currentSpeed);
     }
 
     @org.junit.jupiter.api.Test
     void brake() {
+        car.currentSpeed = 1;
+        car.enginePower = 100;
+        car.brake(-100);
+        assertEquals(1, car.currentSpeed);
+        car.brake(100);
+        assertEquals(0, car.currentSpeed);
     }
 }

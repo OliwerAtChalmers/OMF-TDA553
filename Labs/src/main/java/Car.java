@@ -32,12 +32,10 @@ public class Car implements Movable{
         dir = (((dir - 1) % 360) + 360) % 360;
     }
 
-    // TODO: IS FIXED?
     public void gas(double amount){
         incrementSpeed(Math.clamp(amount, 0, 1));
     }
 
-    // TODO: IS FIXED?
     public void brake(double amount){
         decrementSpeed(Math.clamp(amount, 0, 1));
     }
