@@ -4,13 +4,13 @@ public class Car implements Movable{
     public double dx;
     public double dy;
     public int dir;
+    public double currentSpeed; // The current speed of the car
 
     protected int nrDoors; // Number of doors on the car
     protected double enginePower; // Engine power of the car
     protected Color color; // Color of the car
     protected String modelName; // The car model name
 
-    private double currentSpeed; // The current speed of the car
 
     public Car(){
         dx = 0;
@@ -20,16 +20,16 @@ public class Car implements Movable{
 
     public void move(){
         double rad = Math.toRadians(dir);
-        dx += Math.sin(rad) * getCurrentSpeed();
-        dy += Math.cos(rad) * getCurrentSpeed();
+        dx += Math.cos(rad) * getCurrentSpeed();
+        dy += Math.sin(rad) * getCurrentSpeed();
     }
 
     public void turnLeft(){
-        dir = (((dir - 1) % 360) + 360) % 360;
+        dir = (dir + 1) % 360;
     }
 
     public void turnRight(){
-        dir = (dir + 1) % 360;
+        dir = (((dir - 1) % 360) + 360) % 360;
     }
 
     // TODO: IS FIXED?
