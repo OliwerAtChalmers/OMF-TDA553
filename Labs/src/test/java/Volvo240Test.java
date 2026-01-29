@@ -60,17 +60,15 @@ class Volvo240Test {
     @org.junit.jupiter.api.Test
     void gas() {
         volvo240.currentSpeed = 0;
-        volvo240.enginePower = 100;
         volvo240.gas(-100);
         assertEquals(0, volvo240.currentSpeed);
-        volvo240.gas(1000000);
+        volvo240.gas(100);
         assertEquals(1.25, volvo240.currentSpeed);
     }
 
     @org.junit.jupiter.api.Test
     void brake() {
         volvo240.currentSpeed = 1;
-        volvo240.enginePower = 100;
         volvo240.brake(-100);
         assertEquals(1, volvo240.currentSpeed);
         volvo240.brake(100);
