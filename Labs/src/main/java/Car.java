@@ -1,6 +1,6 @@
 import java.awt.*;
 
-public class Car implements Movable{
+public abstract class Car implements Movable{
     public double dx;
     public double dy;
     public int dir;
@@ -60,9 +60,7 @@ public class Car implements Movable{
         currentSpeed = 0;
     }
 
-    protected double speedFactor(){
-        return enginePower * 0.01;
-    }
+    protected abstract double speedFactor();
 
     private void incrementSpeed(double amount){
         currentSpeed = Math.min(getCurrentSpeed() + speedFactor() * amount, enginePower);
