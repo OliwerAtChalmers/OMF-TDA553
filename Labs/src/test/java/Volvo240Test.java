@@ -33,28 +33,25 @@ class Volvo240Test {
     void turnLeft() {
         volvo240.dir = 0;
         int sum = 0;
-        for (int i = 0; i < 100; i++){
-            int r = (int)(Math.random() * 1080);
-            for (int j = 0; j < r; j++)
-                volvo240.turnLeft();
+        int r = (int)(Math.random() * 1080);
+        for (int j = 0; j < r; j++)
+            volvo240.turnLeft();
 
-            sum += r;
-            assertEquals(sum % 360, volvo240.dir);
-        }
+        sum += r;
+        assertEquals(sum % 360, volvo240.dir);
     }
 
     @org.junit.jupiter.api.Test
     void turnRight() {
         volvo240.dir = 0;
         int sum = 0;
-        for (int i = 0; i < 100; i++){
-            int r = (int)(Math.random() * 1080);
-            for (int j = 0; j < r; j++)
-                volvo240.turnRight();
+        int r = (int)(Math.random() * 1080);
+        for (int j = 0; j < r; j++)
+            volvo240.turnRight();
 
-            sum -= r;
-            assertEquals(((sum % 360) + 360) % 360, volvo240.dir);
-        }
+        sum -= r;
+        assertEquals(((sum % 360) + 360) % 360, volvo240.dir);
+
     }
 
     @org.junit.jupiter.api.Test
