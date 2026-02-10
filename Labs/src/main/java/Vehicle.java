@@ -1,6 +1,6 @@
 import java.awt.*;
 
-public class Vehicle implements Movable{
+public abstract class Vehicle implements Movable{
     public double dx;
     public double dy;
     public int dir;
