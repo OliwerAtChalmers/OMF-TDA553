@@ -40,22 +40,32 @@ public class CarTransport<C extends Car> extends Truck{
     }
 
     public boolean load(C car){
-        if (Point2D.distance(car.dx, car.dy, this.dx, this.dy) > LOAD_DISTANCE || currentSpeed > 0)
+        if (Math.abs(Point2D.distance(car.dx, car.dy, this.dx, this.dy)) > LOAD_DISTANCE || currentSpeed > 0)
             return false;
 
+        car.dx = dx;
+        car.dy = dy;
         return _carStorage.loadCar(car);
     }
 
-    public Car unload(){
+    public C unload(){
         if (currentSpeed != 0)
             return null;
 
-        Car car = _carStorage.unloadCar();
+        C car = _carStorage.unloadCar();
         if (car == null)
             return null;
 
         car.dx += 1;
         car.dy += 1;
         return car;
+    }
+
+    public boolean getRampStatus(){
+        return _rampIsLowered;
+    }
+
+    public ArrayList<C> getStoredCars(){
+        return _carStorage.getStoredCars();
     }
 }
