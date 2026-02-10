@@ -1,6 +1,6 @@
 import java.awt.*;
 
-public class Scania extends Car{
+public class Scania extends Truck{
 
     private final int MAX_BED_ANGLE = 70;
     private final int MIN_BED_ANGLE = 0;
