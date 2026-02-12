@@ -7,7 +7,7 @@ public class Garage<V extends Vehicle>{
         Garage<Saab95> g = new Garage<Saab95>(5);
     }
 
-    public Boolean load(V vehicle){
+    public boolean load(V vehicle){
         return _vehicleStorage.loadCar(vehicle);
     }
 

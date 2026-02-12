@@ -25,6 +25,7 @@ public class CarTransport<C extends Car> extends Truck{
     public void raiseRamp(){
         if (getCurrentSpeed() == 0)
             _rampIsLowered = false;
+
     }
 
     @Override
