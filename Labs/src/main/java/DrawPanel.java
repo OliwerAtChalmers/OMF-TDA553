@@ -2,7 +2,9 @@ import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.image.BufferedImage;
+import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 
 // This panel represents the animated part of the view with the car images.
 
@@ -12,6 +14,8 @@ public class DrawPanel extends JPanel{
     BufferedImage volvoImage;
     // To keep track of a single car's position
     Point volvoPoint = new Point();
+
+    ArrayList<Point> vehiclePoints = new ArrayList<>();
 
     BufferedImage volvoWorkshopImage;
     Point volvoWorkshopPoint = new Point(300,300);
@@ -35,8 +39,8 @@ public class DrawPanel extends JPanel{
 
             // Rememember to rightclick src New -> Package -> name: pics -> MOVE *.jpg to pics.
             // if you are starting in IntelliJ.
-            volvoImage = ImageIO.read(DrawPanel.class.getResourceAsStream("pics/Volvo240.jpg"));
-            volvoWorkshopImage = ImageIO.read(DrawPanel.class.getResourceAsStream("pics/VolvoBrand.jpg"));
+            volvoImage = ImageIO.read(new File("C:\\Users\\oliwe\\Documents\\GitHub\\OMF-TDA553\\Labs\\src\\main\\java\\pics\\Volvo240.jpg"));
+            volvoWorkshopImage = ImageIO.read(new File("C:\\Users\\oliwe\\Documents\\GitHub\\OMF-TDA553\\Labs\\src\\main\\java\\pics\\VolvoBrand.jpg"));
         } catch (IOException ex)
         {
             ex.printStackTrace();

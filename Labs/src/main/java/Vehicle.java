@@ -1,4 +1,5 @@
 import java.awt.*;
+import java.util.ArrayList;
 
 public abstract class Vehicle implements Movable{
     public double dx;
@@ -78,5 +79,10 @@ public abstract class Vehicle implements Movable{
 
     protected double getCurrentSpeed(){
         return currentSpeed;
+    }
+
+
+    public double[] getPosition() {
+        return new double[]{dx, dy};
     }
 }
