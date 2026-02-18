@@ -57,7 +57,7 @@ public class CarController {
                 int y = (int) Math.round(car.getPosition()[1]);
 
                 if (x > (X - IMG_SIZE) || y > Y || x < 0 || y < 0)
-                    car.currentSpeed = -car.currentSpeed;
+                    car.dir = car.dir + 180;
                 frame.drawPanel.moveit(i, x, y);
                 // repaint() calls the paintComponent method of the panel
                 frame.drawPanel.repaint();
@@ -66,9 +66,50 @@ public class CarController {
     }
 
     // Calls the gas method for each car once
-    void gas(int amount) {
-        double gas = ((double) amount) / 100;
+    public void gas(int amount) {
+        double gas = amount / 100.0;
         for (Vehicle car : cars)
             car.gas(gas);
     }
+
+    public void brake(int amount) {
+        double brakeAmount = amount / 100.0;
+        for (Vehicle car : cars)
+            car.brake(brakeAmount);
+    }
+
+    public void start() {
+        for (Vehicle car : cars)
+            car.startEngine();
+    }
+
+    public void stop() {
+        for (Vehicle car : cars)
+            car.stopEngine();
+    }
+
+    public void turboOn() {
+        for (Vehicle car : cars)
+            if (car instanceof Saab95 saab)
+                saab.setTurboOn();
+    }
+
+    public void turboOff() {
+        for (Vehicle car : cars)
+            if (car instanceof Saab95 saab)
+                saab.setTurboOff();
+    }
+
+    public void liftBed() {
+        for (Vehicle car : cars)
+            if (car instanceof Scania scania)
+                scania.raiseBed();
+    }
+
+    public void lowerBed() {
+        for (Vehicle car : cars)
+            if (car instanceof Scania scania)
+                scania.lowerBed();
+    }
+
 }
