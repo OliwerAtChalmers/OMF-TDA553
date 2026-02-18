@@ -119,4 +119,13 @@ public class CarView extends JFrame{
         // Make sure the frame exits when "x" is pressed
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     }
+
+    public static int getXSize() {
+        return X;
+    }
+
+    public static int  getYSize(){
+        return Y;
+    }
+
 }

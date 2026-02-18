@@ -27,6 +27,7 @@ public class DrawPanel extends JPanel{
     void moveit(int i, int x, int y){
         vehiclePoints.get(i).x = x;
         vehiclePoints.get(i).y = y;
+
     }
 
     // Initializes the panel and reads the images

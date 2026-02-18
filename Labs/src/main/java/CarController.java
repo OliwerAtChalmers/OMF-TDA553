@@ -18,6 +18,10 @@ public class CarController {
     // each step between delays.
     private Timer timer = new Timer(delay, new TimerListener());
 
+    private final int X = CarView.getXSize();
+    private final int Y = CarView.getYSize();
+    private final int IMG_SIZE = 100; // size of img
+
     // The frame that represents this instance View of the MVC pattern
     CarView frame;
     // A list of cars, modify if needed
@@ -31,6 +35,7 @@ public class CarController {
 
         cc.cars.add(new Volvo240());
         cc.cars.add(new Saab95());
+        cc.cars.add(new Scania());
 
 
         // Start a new view and send a reference of self
@@ -50,6 +55,9 @@ public class CarController {
                 car.move();
                 int x = (int) Math.round(car.getPosition()[0]);
                 int y = (int) Math.round(car.getPosition()[1]);
+
+                if (x > (X - IMG_SIZE) || y > Y || x < 0 || y < 0)
+                    car.currentSpeed = -car.currentSpeed;
                 frame.drawPanel.moveit(i, x, y);
                 // repaint() calls the paintComponent method of the panel
                 frame.drawPanel.repaint();
