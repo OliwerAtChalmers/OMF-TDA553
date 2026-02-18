@@ -16,30 +16,42 @@ public class DrawPanel extends JPanel{
     Point volvoPoint = new Point();
 
     ArrayList<Point> vehiclePoints = new ArrayList<>();
+    ArrayList<String> vehicleNames = new ArrayList<>();
+    ArrayList<BufferedImage> vehicleImages = new ArrayList<>();
 
     BufferedImage volvoWorkshopImage;
     Point volvoWorkshopPoint = new Point(300,300);
 
+
     // TODO: Make this general for all cars
-    void moveit(int x, int y){
-        volvoPoint.x = x;
-        volvoPoint.y = y;
+    void moveit(int i, int x, int y){
+        vehiclePoints.get(i).x = x;
+        vehiclePoints.get(i).y = y;
     }
 
     // Initializes the panel and reads the images
-    public DrawPanel(int x, int y) {
+    public DrawPanel(int x, int y, ArrayList<Vehicle> cars) {
+        for(int i = 0; i < cars.size(); i++){
+            Vehicle c = cars.get(i);
+            c.dx = i*30;
+            c.dy = i*30;
+            vehiclePoints.add(new Point());
+            vehicleNames.add(c.getModelName());
+        }
+
         this.setDoubleBuffered(true);
         this.setPreferredSize(new Dimension(x, y));
         this.setBackground(Color.green);
         // Print an error message in case file is not found with a try/catch block
         try {
+            for (String s: vehicleNames)
+                vehicleImages.add(ImageIO.read(new File("C:\\Users\\oliwe\\Documents\\GitHub\\OMF-TDA553\\Labs\\src\\main\\java\\pics\\" + s + ".jpg")));
             // You can remove the "pics" part if running outside of IntelliJ and
             // everything is in the same main folder.
             // volvoImage = ImageIO.read(new File("Volvo240.jpg"));
 
             // Rememember to rightclick src New -> Package -> name: pics -> MOVE *.jpg to pics.
             // if you are starting in IntelliJ.
-            volvoImage = ImageIO.read(new File("C:\\Users\\oliwe\\Documents\\GitHub\\OMF-TDA553\\Labs\\src\\main\\java\\pics\\Volvo240.jpg"));
             volvoWorkshopImage = ImageIO.read(new File("C:\\Users\\oliwe\\Documents\\GitHub\\OMF-TDA553\\Labs\\src\\main\\java\\pics\\VolvoBrand.jpg"));
         } catch (IOException ex)
         {
@@ -53,7 +65,11 @@ public class DrawPanel extends JPanel{
     @Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
-        g.drawImage(volvoImage, volvoPoint.x, volvoPoint.y, null); // see javadoc for more info on the parameters
+        for (int i = 0; i < vehiclePoints.size(); i++){
+            Point vp = vehiclePoints.get(i);
+            BufferedImage img = vehicleImages.get(i);
+            g.drawImage(img, vp.x, vp.y, null); // see javadoc for more info on the parameters
+        }
         g.drawImage(volvoWorkshopImage, volvoWorkshopPoint.x, volvoWorkshopPoint.y, null);
     }
 }

@@ -21,7 +21,7 @@ public class CarController {
     // The frame that represents this instance View of the MVC pattern
     CarView frame;
     // A list of cars, modify if needed
-    ArrayList<Vehicle> cars = new ArrayList<Vehicle>();
+    ArrayList<Vehicle> cars = new ArrayList<>();
 
     //methods:
 
@@ -30,6 +30,8 @@ public class CarController {
         CarController cc = new CarController();
 
         cc.cars.add(new Volvo240());
+        cc.cars.add(new Saab95());
+
 
         // Start a new view and send a reference of self
         cc.frame = new CarView("CarSim 1.0", cc);
@@ -43,11 +45,12 @@ public class CarController {
     * */
     private class TimerListener implements ActionListener {
         public void actionPerformed(ActionEvent e) {
-            for (Vehicle car : cars) {
+            for (int i = 0; i < cars.size(); i++) {
+                Vehicle car = cars.get(i);
                 car.move();
                 int x = (int) Math.round(car.getPosition()[0]);
                 int y = (int) Math.round(car.getPosition()[1]);
-                frame.drawPanel.moveit(x, y);
+                frame.drawPanel.moveit(i, x, y);
                 // repaint() calls the paintComponent method of the panel
                 frame.drawPanel.repaint();
             }

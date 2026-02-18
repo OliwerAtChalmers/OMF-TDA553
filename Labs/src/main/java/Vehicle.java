@@ -2,8 +2,8 @@ import java.awt.*;
 import java.util.ArrayList;
 
 public abstract class Vehicle implements Movable{
-    public double dx;
-    public double dy;
+    public int dx;
+    public int dy;
     public int dir;
     public double currentSpeed; // The current speed of the car
 
@@ -21,8 +21,8 @@ public abstract class Vehicle implements Movable{
 
     public void move(){
         double rad = Math.toRadians(dir);
-        dx += Math.cos(rad) * getCurrentSpeed();
-        dy += Math.sin(rad) * getCurrentSpeed();
+        dx += Math.round(Math.cos(rad) * getCurrentSpeed());
+        dy += Math.round(Math.sin(rad) * getCurrentSpeed());
     }
 
     public void turnLeft(){
@@ -84,5 +84,9 @@ public abstract class Vehicle implements Movable{
 
     public double[] getPosition() {
         return new double[]{dx, dy};
+    }
+
+    public String getModelName() {
+        return modelName;
     }
 }
