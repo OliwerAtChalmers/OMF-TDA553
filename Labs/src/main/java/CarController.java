@@ -20,7 +20,8 @@ public class CarController {
 
     private final int X = CarView.getXSize();
     private final int Y = CarView.getYSize();
-    private final int IMG_SIZE = 100; // size of img
+    private final int IMG_SIZE_X = 100; // size of img
+    private final int IMG_SIZE_Y = 60; // size of img
 
     // The frame that represents this instance View of the MVC pattern
     CarView frame;
@@ -56,7 +57,7 @@ public class CarController {
                 int x = (int) Math.round(car.getPosition()[0]);
                 int y = (int) Math.round(car.getPosition()[1]);
 
-                if (x > (X - IMG_SIZE) || y > Y || x < 0 || y < 0)
+                if (x > (X - IMG_SIZE_X) || y > (Y - IMG_SIZE_Y) || x < 0 || y < 0)
                     car.dir = car.dir + 180;
                 frame.drawPanel.moveit(i, x, y);
                 // repaint() calls the paintComponent method of the panel
@@ -110,6 +111,18 @@ public class CarController {
         for (Vehicle car : cars)
             if (car instanceof Scania scania)
                 scania.lowerBed();
+    }
+
+    public void turnLeft() {
+        for (Vehicle car : cars) {
+            car.turnLeft();
+        }
+    }
+
+    public void turnRight() {
+        for (Vehicle car : cars) {
+            car.turnRight();
+        }
     }
 
 }

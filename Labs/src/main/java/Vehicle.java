@@ -12,6 +12,7 @@ public abstract class Vehicle implements Movable{
     protected Color color; // Color of the car
     protected String modelName; // The car model name
 
+    private int turnRadius = 10;
 
     public Vehicle(){
         dx = 0;
@@ -26,11 +27,11 @@ public abstract class Vehicle implements Movable{
     }
 
     public void turnLeft(){
-        dir = (dir + 1) % 360;
+        dir = (((dir - turnRadius) % 360) + 360) % 360;
     }
 
     public void turnRight(){
-        dir = (((dir - 1) % 360) + 360) % 360;
+        dir = (dir + turnRadius) % 360;
     }
 
     public void gas(double amount){
