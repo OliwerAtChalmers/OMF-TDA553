@@ -58,6 +58,13 @@ public class CarView extends JFrame{
 
         this.add(drawPanel);
 
+        // Adds cars to points and images
+        for (int i = 0; i <carC.cars.size(); i++) {
+            drawPanel.vehiclePoints.add(new Point());
+            drawPanel.imageFileNames.add(carC.cars.get(i).getModelName() + ".jpg");
+        }
+        drawPanel.initImages();
+
 
 
         SpinnerModel spinnerModel =

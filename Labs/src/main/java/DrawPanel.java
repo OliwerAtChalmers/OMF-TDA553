@@ -3,6 +3,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
+import java.util.ArrayList;
 
 // This panel represents the animated part of the view with the car images.
 
@@ -13,13 +14,20 @@ public class DrawPanel extends JPanel{
     // To keep track of a single car's position
     Point volvoPoint = new Point();
 
+    ArrayList<Point> vehiclePoints = new ArrayList<>();
+    ArrayList<String> imageFileNames = new ArrayList<>();
+    ArrayList<BufferedImage> imageList = new ArrayList<>();
+
+
+
     BufferedImage volvoWorkshopImage;
     Point volvoWorkshopPoint = new Point(300,300);
 
     // TODO: Make this general for all cars
-    void moveit(int x, int y){
-        volvoPoint.x = x;
-        volvoPoint.y = y;
+    void moveit(int vehiclePointIndex, int x, int y){
+        Point vp = vehiclePoints.get(vehiclePointIndex);
+        vp.x = x;
+        vp.y = y;
     }
 
     // Initializes the panel and reads the images
@@ -27,6 +35,9 @@ public class DrawPanel extends JPanel{
         this.setDoubleBuffered(true);
         this.setPreferredSize(new Dimension(x, y));
         this.setBackground(Color.green);
+    }
+
+    public void initImages(){
         // Print an error message in case file is not found with a try/catch block
         try {
             // You can remove the "pics" part if running outside of IntelliJ and
@@ -35,13 +46,14 @@ public class DrawPanel extends JPanel{
 
             // Rememember to rightclick src New -> Package -> name: pics -> MOVE *.jpg to pics.
             // if you are starting in IntelliJ.
-            volvoImage = ImageIO.read(DrawPanel.class.getResourceAsStream("/pics/Volvo240.jpg"));
+
+            for(String fileName: imageFileNames)
+                imageList.add(ImageIO.read(DrawPanel.class.getResourceAsStream("/pics/" + fileName)));
             volvoWorkshopImage = ImageIO.read(DrawPanel.class.getResourceAsStream("/pics/VolvoBrand.jpg"));
         } catch (IOException ex)
         {
             ex.printStackTrace();
         }
-
     }
 
     // This method is called each time the panel updates/refreshes/repaints itself
@@ -49,7 +61,8 @@ public class DrawPanel extends JPanel{
     @Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
-        g.drawImage(volvoImage, volvoPoint.x, volvoPoint.y, null); // see javadoc for more info on the parameters
+        for(int i = 0; i < vehiclePoints.size(); i++)
+            g.drawImage(imageList.get(i), vehiclePoints.get(i).x, vehiclePoints.get(i).y, null); // see javadoc for more info on the parameters
         g.drawImage(volvoWorkshopImage, volvoWorkshopPoint.x, volvoWorkshopPoint.y, null);
     }
 }
