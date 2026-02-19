@@ -19,6 +19,10 @@ public class CarController {
     // each step between delays.
     private Timer timer = new Timer(delay, new TimerListener());
 
+    private final int IMAGE_HEIGHT = 100;
+    private final int IMAGE_WIDTH = 200;
+
+
     // The frame that represents this instance View of the MVC pattern
     CarView frame;
     // A list of cars, modify if needed
@@ -48,19 +52,33 @@ public class CarController {
     * */
     private class TimerListener implements ActionListener {
         public void actionPerformed(ActionEvent e) {
-            for (int i = 0; i < cars.size(); i++) {
+            for (int i = cars.size() - 1; i >= 0; i--) {
                 Vehicle car = cars.get(i);
                 car.move();
 
                 int x = (int) Math.round(car.getPosition().getX());
                 int y = (int) Math.round(car.getPosition().getY());
-
                 frame.drawPanel.moveit(i, x, y);
+                frame.drawPanel.repaint();
+
+                // Checks if car is out of bounds or in garage
+                if (x < 0 || x > (frame.getScreenWidth() - IMAGE_WIDTH) || y < 0 || y > (frame.getScreenHeight() - IMAGE_HEIGHT - 220)){
+                    car.setDirection(car.getDirection() + 180);
+                } else if ((Math.abs(x - frame.drawPanel.volvoWorkshopPoint.x) < 5
+                        || Math.abs(y - frame.drawPanel.volvoWorkshopPoint.y) < 5)
+                        && Objects.equals(car.getModelName(), "Volvo240")) {
+                        removeCar(i);
+                }
             }
-
-            frame.drawPanel.repaint();
-
         }
+    }
+
+    // Helper function to remove cars accross parallel lists
+    void removeCar(int index) {
+        cars.remove(index);
+        frame.drawPanel.vehiclePoints.remove(index);
+        frame.drawPanel.imageList.remove(index);
+        frame.drawPanel.imageFileNames.remove(index);
     }
 
     // Calls the gas method for each car once

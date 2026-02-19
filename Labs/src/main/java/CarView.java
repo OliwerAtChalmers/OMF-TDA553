@@ -63,9 +63,8 @@ public class CarView extends JFrame{
             drawPanel.vehiclePoints.add(new Point());
             drawPanel.imageFileNames.add(carC.cars.get(i).getModelName() + ".jpg");
         }
+        //initialises all images
         drawPanel.initImages();
-
-
 
         SpinnerModel spinnerModel =
                 new SpinnerNumberModel(0, //initial value
@@ -195,5 +194,12 @@ public class CarView extends JFrame{
         this.setVisible(true);
         // Make sure the frame exits when "x" is pressed
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+    }
+
+    public int getScreenWidth(){
+        return X;
+    }
+    public int getScreenHeight(){
+        return Y;
     }
 }
