@@ -58,7 +58,6 @@ public class CarTransport<C extends Car> extends Truck{
         if (car == null)
             return null;
 
-
         Point carPos = car.getPosition();
         car.setPosition(carPos.x + 10, carPos.y + 10);
         return car;

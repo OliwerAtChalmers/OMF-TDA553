@@ -8,14 +8,10 @@ public abstract class Vehicle implements Movable{
     protected String modelName; // The car model name
 
     private Point position = new Point();
-    private int direction;
+    private int direction = 0;
     private double currentSpeed; // The current speed of the car
 
     private final int TURN_RADIUS = 30;
-
-    public Vehicle(){
-        direction = 0;
-    }
 
     public void move(){
         double rad = Math.toRadians(direction);

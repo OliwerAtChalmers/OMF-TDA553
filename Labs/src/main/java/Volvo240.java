@@ -2,7 +2,7 @@ import java.awt.*;
 
 public class Volvo240 extends Car{
 
-    public final static double trimFactor = 1.25;
+    private final static double trimFactor = 1.25;
 
     public Volvo240(){
         nrDoors = 4;
@@ -14,6 +14,10 @@ public class Volvo240 extends Car{
 
     @Override
     protected double speedFactor(){
-        return enginePower * 0.01 * trimFactor;
+        return enginePower * 0.01 * getTrimFactor();
+    }
+
+    public static double getTrimFactor() {
+        return trimFactor;
     }
 }
