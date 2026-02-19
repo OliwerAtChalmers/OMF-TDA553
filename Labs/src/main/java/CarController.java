@@ -21,6 +21,8 @@ public class CarController {
 
     private final int IMAGE_HEIGHT = 100;
     private final int IMAGE_WIDTH = 200;
+    private final int SCREEN_OFFSET = 220;
+    private final int GARAGE_RADIUS = 30;
 
 
     // The frame that represents this instance View of the MVC pattern
@@ -63,13 +65,13 @@ public class CarController {
                 frame.drawPanel.repaint();
 
                 // Checks if car is out of bounds or in garage
-                if (x < 0 || x > (frame.getScreenWidth() - IMAGE_WIDTH) || y < 0 || y > (frame.getScreenHeight() - IMAGE_HEIGHT - 220)){
+                if (x < 0 || x > (frame.getScreenWidth() - IMAGE_WIDTH) || y < 0 || y > (frame.getScreenHeight() - IMAGE_HEIGHT - SCREEN_OFFSET)){
                     car.setDirection(car.getDirection() + 180);
                 }
-                
+
                 double dx = x - frame.drawPanel.volvoWorkshopPoint.x;
                 double dy = y - frame.drawPanel.volvoWorkshopPoint.y;
-                if (Math.sqrt(dx * dx + dy * dy) <= 30 && Objects.equals(car.getModelName(), "Volvo240")) {
+                if (Math.sqrt(dx * dx + dy * dy) <= GARAGE_RADIUS && Objects.equals(car.getModelName(), "Volvo240")) {
                     removeCar(i);
                 }
             }
