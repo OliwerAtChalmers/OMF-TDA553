@@ -11,6 +11,8 @@ public abstract class Vehicle implements Movable{
     private int direction;
     private double currentSpeed; // The current speed of the car
 
+    private final int TURN_RADIUS = 30;
+
     public Vehicle(){
         direction = 0;
     }
@@ -22,11 +24,11 @@ public abstract class Vehicle implements Movable{
     }
 
     public void turnLeft(){
-        direction = (direction + 1) % 360;
+        direction = (((direction - TURN_RADIUS) % 360) + 360) % 360;
     }
 
     public void turnRight(){
-        direction = (((direction - 1) % 360) + 360) % 360;
+        direction = (direction + TURN_RADIUS) % 360;
     }
 
     public void gas(double amount){
@@ -84,6 +86,7 @@ public abstract class Vehicle implements Movable{
     public Point getPosition() {
         return position;
     }
+
     public void setPosition(int x, int y){
         position = new Point(x, y);
     }
@@ -95,4 +98,8 @@ public abstract class Vehicle implements Movable{
     public void setDirection(int direction){
         this.direction = direction;
     }
+
+    public String getModelName(){
+        return modelName;
+    };
 }

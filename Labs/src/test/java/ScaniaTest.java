@@ -6,7 +6,7 @@ class ScaniaTest {
 
     @org.junit.jupiter.api.Test
     void bed(){
-        scania.raiseBed();
+        scania.liftBed();
         assertEquals(1, scania.getBedAngle());
         scania.lowerBed();
         assertEquals(0, scania.getBedAngle());
@@ -15,7 +15,7 @@ class ScaniaTest {
     @org.junit.jupiter.api.Test
     void move(){
         scania.setCurrentSpeed(0);
-        scania.raiseBed();
+        scania.liftBed();
         scania.setCurrentSpeed(1);
         scania.move();
         assertEquals(0, scania.getPosition().getX());

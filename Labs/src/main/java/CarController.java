@@ -2,6 +2,7 @@ import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
+import java.util.Objects;
 
 /*
 * This class represents the Controller part in the MVC pattern.
@@ -61,4 +62,77 @@ public class CarController {
             car.gas(gas);
        }
     }
+
+    // Brake all cars
+    void brake(int amount) {
+        double brake = ((double) amount) / 100;
+        for (Vehicle car : cars) {
+            car.brake(brake);
+        }
+    }
+
+    // Start all cars
+    void startAllCars() {
+        for (Vehicle car : cars) {
+            car.startEngine();
+        }
+    }
+
+    // Stop all cars
+    void stopAllCars() {
+        for (Vehicle car : cars) {
+            car.stopEngine();
+        }
+    }
+
+    // Turn turbo on (only Saab)
+    void turboOn() {
+        for (Vehicle car : cars) {
+            if (Objects.equals(car.getModelName(), "Saab95")) {
+                ((Saab95) car).setTurboOn();
+            }
+        }
+    }
+
+    // Turn turbo off (only Saab)
+    void turboOff() {
+        for (Vehicle car : cars) {
+            if (Objects.equals(car.getModelName(), "Saab95")) {
+                ((Saab95) car).setTurboOff();
+            }
+        }
+    }
+
+    // Lift bed (only Scania)
+    void liftBed() {
+        for (Vehicle car : cars) {
+            if (Objects.equals(car.getModelName(), "Scania")) {
+                ((Scania) car).liftBed();
+            }
+        }
+    }
+
+    // Lower bed (only Scania)
+    void lowerBed() {
+        for (Vehicle car : cars) {
+            if (Objects.equals(car.getModelName(), "Scania")) {
+                ((Scania) car).lowerBed();
+            }
+        }
+    }
+
+    // Turn all cars left
+    void turnLeft() {
+        for (Vehicle car : cars) {
+            car.turnLeft();
+        }
+    }
+
+    // Turn all cars right
+    void turnRight() {
+        for (Vehicle car : cars) {
+            car.turnRight();
+        }
+    }
+
 }

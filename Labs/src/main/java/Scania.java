@@ -15,7 +15,7 @@ public class Scania extends Truck{
         stopEngine();
     }
 
-    public void raiseBed(){
+    public void liftBed(){
         if (getCurrentSpeed() == 0 && getBedAngle() < MAX_BED_ANGLE){
             _bedAngle++;
         }
