@@ -64,9 +64,23 @@ public class CarController {
                 frame.drawPanel.moveit(i, x, y);
                 frame.drawPanel.repaint();
 
+                int xMax = frame.getScreenWidth() - IMAGE_WIDTH / 2;
+                int yMax = frame.getScreenHeight() - IMAGE_HEIGHT - SCREEN_OFFSET;
                 // Checks if car is out of bounds or in garage
-                if (x < 0 || x > (frame.getScreenWidth() - IMAGE_WIDTH) || y < 0 || y > (frame.getScreenHeight() - IMAGE_HEIGHT - SCREEN_OFFSET)){
-                    car.setDirection(car.getDirection() + 180);
+                if (x < 0) {
+                    car.setDirection(180 - car.getDirection());
+                    car.setPosition(0, (int) (car.getPosition().getY()));
+                } else if (x > xMax) {
+                    car.setPosition(xMax, (int) (car.getPosition().getY()));
+                    car.setDirection(180 - car.getDirection());
+                }
+
+                if (y < 0) {
+                    car.setPosition((int) (car.getPosition().getX()), 0);
+                    car.setDirection(-car.getDirection());
+                } else if (y > yMax) {
+                    car.setPosition((int) (car.getPosition().getX()), yMax);
+                    car.setDirection(-car.getDirection());
                 }
 
                 double dx = x - frame.drawPanel.volvoWorkshopPoint.x;
