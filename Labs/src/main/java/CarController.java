@@ -36,6 +36,7 @@ public class CarController {
 
         cc.cars.add(new Volvo240());
         cc.cars.add(new Saab95());
+        cc.cars.add(new Scania());
 
         for(int i = 0; i < cc.cars.size(); i++) {
             cc.cars.get(i).setPosition(0, i*100);
@@ -64,10 +65,12 @@ public class CarController {
                 // Checks if car is out of bounds or in garage
                 if (x < 0 || x > (frame.getScreenWidth() - IMAGE_WIDTH) || y < 0 || y > (frame.getScreenHeight() - IMAGE_HEIGHT - 220)){
                     car.setDirection(car.getDirection() + 180);
-                } else if ((Math.abs(x - frame.drawPanel.volvoWorkshopPoint.x) < 5
-                        || Math.abs(y - frame.drawPanel.volvoWorkshopPoint.y) < 5)
-                        && Objects.equals(car.getModelName(), "Volvo240")) {
-                        removeCar(i);
+                }
+                
+                double dx = x - frame.drawPanel.volvoWorkshopPoint.x;
+                double dy = y - frame.drawPanel.volvoWorkshopPoint.y;
+                if (Math.sqrt(dx * dx + dy * dy) <= 30 && Objects.equals(car.getModelName(), "Volvo240")) {
+                    removeCar(i);
                 }
             }
         }
