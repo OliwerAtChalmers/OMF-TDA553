@@ -1,35 +1,32 @@
 import java.awt.*;
 
 public abstract class Vehicle implements Movable{
-    public double dx;
-    public double dy;
-    public int dir;
-    public double currentSpeed; // The current speed of the car
 
     protected int nrDoors; // Number of doors on the car
     protected double enginePower; // Engine power of the car
     protected Color color; // Color of the car
     protected String modelName; // The car model name
 
+    private Point position = new Point();
+    private int direction;
+    private double currentSpeed; // The current speed of the car
 
     public Vehicle(){
-        dx = 0;
-        dy = 0;
-        dir = 0;
+        direction = 0;
     }
 
     public void move(){
-        double rad = Math.toRadians(dir);
-        dx += Math.cos(rad) * getCurrentSpeed();
-        dy += Math.sin(rad) * getCurrentSpeed();
+        double rad = Math.toRadians(direction);
+        position.x += (int) (Math.cos(rad) * getCurrentSpeed());
+        position.y += (int) (Math.sin(rad) * getCurrentSpeed());
     }
 
     public void turnLeft(){
-        dir = (dir + 1) % 360;
+        direction = (direction + 1) % 360;
     }
 
     public void turnRight(){
-        dir = (((dir - 1) % 360) + 360) % 360;
+        direction = (((direction - 1) % 360) + 360) % 360;
     }
 
     public void gas(double amount){
@@ -76,7 +73,26 @@ public abstract class Vehicle implements Movable{
         return enginePower;
     }
 
-    protected double getCurrentSpeed(){
+    public double getCurrentSpeed(){
         return currentSpeed;
+    }
+
+    public void setCurrentSpeed(double speed){
+        currentSpeed = speed;
+    }
+
+    public Point getPosition() {
+        return position;
+    }
+    public void setPosition(int x, int y){
+        position = new Point(x, y);
+    }
+
+    public int getDirection(){
+        return direction;
+    }
+
+    public void setDirection(int direction){
+        this.direction = direction;
     }
 }

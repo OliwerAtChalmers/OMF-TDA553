@@ -14,12 +14,12 @@ class ScaniaTest {
 
     @org.junit.jupiter.api.Test
     void move(){
-        scania.currentSpeed = 0;
+        scania.setCurrentSpeed(0);
         scania.raiseBed();
-        scania.currentSpeed = 1;
+        scania.setCurrentSpeed(1);
         scania.move();
-        assertEquals(0, scania.dx);
-        assertEquals(0, scania.dy);
+        assertEquals(0, scania.getPosition().getX());
+        assertEquals(0, scania.getPosition().getY());
     }
 
 }

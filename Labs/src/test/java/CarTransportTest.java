@@ -5,9 +5,9 @@ class CarTransportTest {
     private CarTransport<Car> carTransport = new CarTransport<Car>(5);
 
     private void resetCarTransport(){
-        carTransport.currentSpeed = 0;
-        carTransport.dx = 0;
-        carTransport.dy = 0;
+        carTransport.setDirection(0);
+        carTransport.setCurrentSpeed(0);
+        carTransport.setPosition(0, 0);
     }
 
     @org.junit.jupiter.api.Test
@@ -28,11 +28,11 @@ class CarTransportTest {
         Saab95 s = new Saab95();
         carTransport.load(s);
 
-        carTransport.currentSpeed = 1;
+        carTransport.setCurrentSpeed(1);
         carTransport.move();
 
-        assertEquals(carTransport.dy, carTransport.getStoredCars().get(0).dy);
-        assertEquals(carTransport.dx, carTransport.getStoredCars().get(0).dx);
+        assertEquals(carTransport.getPosition().getY(), carTransport.getStoredCars().getFirst().getPosition().getY());
+        assertEquals(carTransport.getPosition().getX(), carTransport.getStoredCars().getFirst().getPosition().getX());
         carTransport.unload();
     }
 
@@ -41,7 +41,7 @@ class CarTransportTest {
         resetCarTransport();
         Saab95 s = new Saab95();
         carTransport.load(s);
-        assertEquals(carTransport.getStoredCars().get(0), s);
+        assertEquals(carTransport.getStoredCars().getFirst(), s);
         carTransport.unload();
     }
 

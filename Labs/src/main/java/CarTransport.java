@@ -34,31 +34,33 @@ public class CarTransport<C extends Car> extends Truck{
             super.move();
             ArrayList<C> storedCars = _carStorage.getStoredCars();
             for (Car car : storedCars) {
-                car.dx = dx;
-                car.dy = dy;
+                Point pos = this.getPosition();
+                car.setPosition(pos.x, pos.y);
             }
         }
     }
 
     public boolean load(C car){
-        if (Math.abs(Point2D.distance(car.dx, car.dy, this.dx, this.dy)) > LOAD_DISTANCE || currentSpeed > 0)
+        Point pos = this.getPosition();
+        if (Math.abs(Point2D.distance(car.getPosition().getX(), car.getPosition().getY(), pos.getX(), pos.getY())) > LOAD_DISTANCE
+                || getCurrentSpeed() > 0)
             return false;
 
-        car.dx = dx;
-        car.dy = dy;
+        car.setPosition(pos.x, pos.y);
         return _carStorage.loadCar(car);
     }
 
     public C unload(){
-        if (currentSpeed != 0)
+        if (getCurrentSpeed()!= 0)
             return null;
 
         C car = _carStorage.unloadCar();
         if (car == null)
             return null;
 
-        car.dx += 1;
-        car.dy += 1;
+
+        Point carPos = car.getPosition();
+        car.setPosition(carPos.x + 10, carPos.y + 10);
         return car;
     }
 

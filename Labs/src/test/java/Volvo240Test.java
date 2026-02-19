@@ -12,63 +12,62 @@ class Volvo240Test {
 
     @org.junit.jupiter.api.Test
     void move() {
-        volvo240.currentSpeed = 1;
-        volvo240.dx = 0;
-        volvo240.dy = 0;
+        volvo240.setCurrentSpeed(1);
+        volvo240.setPosition(0, 0);
         volvo240.move();
 
-        assertEquals(1, Math.round(volvo240.dx * 1000.0) / 1000.0);
+        assertEquals(1, Math.round(volvo240.getPosition().getX() * 1000.0) / 1000.0);
         turnLeft90Degrees();
         volvo240.move();
-        assertEquals(1, Math.round(volvo240.dy * 1000.0) / 1000.0);
+        assertEquals(1, Math.round(volvo240.getPosition().getY() * 1000.0) / 1000.0);
         turnLeft90Degrees();
         volvo240.move();
-        assertEquals(0, Math.round(volvo240.dx * 1000.0) / 1000.0);
+        assertEquals(0, Math.round(volvo240.getPosition().getX() * 1000.0) / 1000.0);
         turnLeft90Degrees();
         volvo240.move();
-        assertEquals(0, Math.round(volvo240.dy * 1000.0) / 1000.0);
+        assertEquals(0, Math.round(volvo240.getPosition().getY() * 1000.0) / 1000.0);
     }
 
     @org.junit.jupiter.api.Test
     void turnLeft() {
-        volvo240.dir = 0;
+        volvo240.setDirection(0);
         int sum = 0;
         int r = (int)(Math.random() * 1080);
         for (int j = 0; j < r; j++)
             volvo240.turnLeft();
 
         sum += r;
-        assertEquals(sum % 360, volvo240.dir);
+        assertEquals(sum % 360, volvo240.getDirection());
     }
 
     @org.junit.jupiter.api.Test
     void turnRight() {
-        volvo240.dir = 0;
+        volvo240.setDirection(0);
         int sum = 0;
         int r = (int)(Math.random() * 1080);
         for (int j = 0; j < r; j++)
             volvo240.turnRight();
 
         sum -= r;
-        assertEquals(((sum % 360) + 360) % 360, volvo240.dir);
+        assertEquals(((sum % 360) + 360) % 360, volvo240.getDirection());
 
     }
 
     @org.junit.jupiter.api.Test
     void gas() {
-        volvo240.currentSpeed = 0;
+        volvo240.setCurrentSpeed(0);
         volvo240.gas(-100);
-        assertEquals(0, volvo240.currentSpeed);
+        assertEquals(0, volvo240.getCurrentSpeed());
         volvo240.gas(100);
-        assertEquals(1.25, volvo240.currentSpeed);
+        assertEquals(1.25, volvo240.getCurrentSpeed());
     }
 
     @org.junit.jupiter.api.Test
     void brake() {
-        volvo240.currentSpeed = 1;
+        volvo240.setCurrentSpeed(1);
         volvo240.brake(-100);
-        assertEquals(1, volvo240.currentSpeed);
+        assertEquals(1, volvo240.getCurrentSpeed());
         volvo240.brake(100);
-        assertEquals(0, volvo240.currentSpeed);
+        assertEquals(0, volvo240.getCurrentSpeed());
     }
 }
