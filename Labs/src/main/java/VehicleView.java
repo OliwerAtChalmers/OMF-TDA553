@@ -58,9 +58,9 @@ public class VehicleView extends JFrame{
         this.add(drawPanel);
 
         // Adds vehicles to points and images
-        for (int i = 0; i < vehicleC.vehicles.size(); i++) {
+        for (int i = 0; i < vehicleC.getVehicles().size(); i++) {
             drawPanel.vehiclePoints.add(new Point());
-            drawPanel.imageFileNames.add(vehicleC.vehicles.get(i).getModelName() + ".jpg");
+            drawPanel.imageFileNames.add(vehicleC.getVehicles().get(i).getModelName() + ".jpg");
         }
 
         //initializes all images
