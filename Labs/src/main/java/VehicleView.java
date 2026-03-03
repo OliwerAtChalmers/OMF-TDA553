@@ -20,6 +20,7 @@ import java.util.Map;
 public class VehicleView extends JFrame{
     private final int width;
     private final int height;
+    private static final String WORKSHOP_SPRITE_KEY = "Workshop";
 
     // The controller member
     VehicleController vehicleC;
@@ -72,8 +73,10 @@ public class VehicleView extends JFrame{
         SpriteLoader spriteLoader = new SpriteLoader("/pics/");
         Map<String, BufferedImage> sprites = spriteLoader.loadSprites(modelNames);
         BufferedImage workshopImage = spriteLoader.loadWorkshopImage();
+        if (workshopImage != null) {
+            sprites.put(WORKSHOP_SPRITE_KEY, workshopImage);
+        }
         drawPanel.setSprites(sprites);
-        drawPanel.setWorkshopImage(workshopImage);
 
         SpinnerModel spinnerModel =
                 new SpinnerNumberModel(0, //initial value
@@ -205,12 +208,8 @@ public class VehicleView extends JFrame{
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     }
 
-    public Point getWorkshopPoint() {
-        return drawPanel.getWorkshopPoint();
-    }
-
-    public void render(SimulationSnapshot snapshot) {
-        drawPanel.setVehicleStates(snapshot.getVehicleStates());
+    public void render(List<State> states) {
+        drawPanel.setStates(states);
         drawPanel.repaint();
     }
 }

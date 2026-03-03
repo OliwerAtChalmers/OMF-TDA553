@@ -13,8 +13,10 @@ public class VehicleSimulation {
     private final int xMax = worldWidth - IMAGE_WIDTH / 2;
     private final int yMax = worldHeight - IMAGE_HEIGHT - SCREEN_OFFSET;
 
+    private static final String WORKSHOP_STATE_NAME = "Workshop";
+
     private final ArrayList<Vehicle> vehicles = new ArrayList<>();
-    private Point workshopPoint = new Point(0, 0);
+    private Point workshopPoint = new Point(300, 300);
 
     public void setWorkshopPoint(Point workshopPoint) {
         if (workshopPoint != null) {
@@ -38,7 +40,7 @@ public class VehicleSimulation {
         return vehicles;
     }
 
-    public SimulationSnapshot tick() {
+    public ArrayList<State> tick() {
         for (int i = vehicles.size() - 1; i >= 0; i--) {
             Vehicle vehicle = vehicles.get(i);
             vehicle.move();
@@ -52,16 +54,18 @@ public class VehicleSimulation {
             }
         }
 
-        ArrayList<VehicleState> states = new ArrayList<>();
+        ArrayList<State> states = new ArrayList<>();
         for (Vehicle vehicle : vehicles) {
-            states.add(new VehicleState(
+            states.add(new State(
                     vehicle.getModelName(),
                     (int) Math.round(vehicle.getPosition().getX()),
                     (int) Math.round(vehicle.getPosition().getY())
             ));
         }
 
-        return new SimulationSnapshot(states);
+        states.add(new State(WORKSHOP_STATE_NAME, workshopPoint.x, workshopPoint.y));
+
+        return states;
     }
 
     private void checkBorders(Vehicle vehicle) {
@@ -153,5 +157,15 @@ public class VehicleSimulation {
         for (Vehicle vehicle : vehicles) {
             vehicle.turnRight();
         }
+    }
+
+    public void removeVehicleAt(int index) {
+        if (index >= 0 && index < vehicles.size()) {
+            vehicles.remove(index);
+        }
+    }
+
+    public void removeVehicle(Vehicle vehicle) {
+        vehicles.remove(vehicle);
     }
 }

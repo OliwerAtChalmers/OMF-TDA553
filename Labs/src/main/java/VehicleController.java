@@ -45,7 +45,6 @@ public class VehicleController {
                 cc.simulation.getWorldWidth(),
                 cc.simulation.getWorldHeight()
         );
-        cc.simulation.setWorkshopPoint(cc.frame.getWorkshopPoint());
 
         // Start the timer
         cc.timer.start();
@@ -56,8 +55,7 @@ public class VehicleController {
     * */
     private class TimerListener implements ActionListener {
         public void actionPerformed(ActionEvent e) {
-            SimulationSnapshot snapshot = simulation.tick();
-            frame.render(snapshot);
+            frame.render(simulation.tick());
         }
     }
 
@@ -109,6 +107,18 @@ public class VehicleController {
     // Turn all vehicles right
     public void turnRight() {
         simulation.turnRightAll();
+    }
+
+    public void addVehicle(Vehicle vehicle) {
+        simulation.addVehicle(vehicle);
+    }
+
+    public void removeVehicleAt(int index) {
+        simulation.removeVehicleAt(index);
+    }
+
+    public void removeVehicle(Vehicle vehicle) {
+        simulation.removeVehicle(vehicle);
     }
 
     // returns all vehicles

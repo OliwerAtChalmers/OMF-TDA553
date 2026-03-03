@@ -1,9 +1,9 @@
-public class VehicleState {
+public final class State {
     private final String modelName;
     private final int x;
     private final int y;
 
-    public VehicleState(String modelName, int x, int y) {
+    public State(String modelName, int x, int y) {
         this.modelName = modelName;
         this.x = x;
         this.y = y;
