@@ -14,8 +14,8 @@ import java.awt.event.ActionListener;
  **/
 
 public class VehicleView extends JFrame{
-    private static int X = 800;
-    private static int Y = 800;
+    private static int X;
+    private static int Y;
 
     // The controller member
     VehicleController vehicleC;
