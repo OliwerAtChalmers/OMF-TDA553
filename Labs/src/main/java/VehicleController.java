@@ -20,7 +20,7 @@ public class VehicleController {
 
     // The frame that represents this instance View of the MVC pattern
     VehicleView frame;
-    VehicleSimulator simulator = new VehicleSimulator();
+    VehicleSimulation simulation = new VehicleSimulation();
 
     //methods:
 
@@ -29,20 +29,23 @@ public class VehicleController {
         VehicleController cc = new VehicleController();
 
 
-        cc.simulator.addVehicle(new Volvo240());
-        cc.simulator.addVehicle(new Saab95());
-        cc.simulator.addVehicle(new Scania());
-        cc.simulator.addVehicle(new Saab95());
+        cc.simulation.addVehicle(new Volvo240());
+        cc.simulation.addVehicle(new Saab95());
+        cc.simulation.addVehicle(new Scania());
+        cc.simulation.addVehicle(new Saab95());
 
-        for(int i = 0; i < cc.simulator.getVehicles().size(); i++) {
-            cc.simulator.getVehicles().get(i).setPosition(0, i*100);
+        for(int i = 0; i < cc.simulation.getVehicles().size(); i++) {
+            cc.simulation.getVehicles().get(i).setPosition(0, i*100);
         }
 
         // Start a new view and send a reference of self
-        cc.frame = new VehicleView("VehicleSim 1.0", cc);
-        cc.frame.setScreenHeight(cc.simulator.getWorldHeight());
-        cc.frame.setScreenWidth(cc.simulator.getWorldWidth());
-        cc.simulator.setWorkshopPoint(cc.frame.drawPanel.volvoWorkshopPoint);
+        cc.frame = new VehicleView(
+                "VehicleSim 1.0",
+                cc,
+                cc.simulation.getWorldWidth(),
+                cc.simulation.getWorldHeight()
+        );
+        cc.simulation.setWorkshopPoint(cc.frame.getWorkshopPoint());
 
         // Start the timer
         cc.timer.start();
@@ -53,81 +56,63 @@ public class VehicleController {
     * */
     private class TimerListener implements ActionListener {
         public void actionPerformed(ActionEvent e) {
-            ArrayList<State> states = new ArrayList<>(simulator.tick());
-            for (int i = 0; i < states.size(); i++) {
-                // Gets a vehicle
-                State state = states.get(i);
-                frame.drawPanel.moveit(i, state.getX(), state.getY());
-            }
-
-            frame.drawPanel.repaint();
-
-            ArrayList<Integer> indicesToRemove = new ArrayList<>(simulator.consumeRemovedVehicles());
-            for (int index : indicesToRemove) {
-                removeVehicle(index);
-            }
+            SimulationSnapshot snapshot = simulation.tick();
+            frame.render(snapshot);
         }
-    }
-
-    // Helper function to remove vehicles across parallel lists
-    private void removeVehicle(int index) {
-        frame.drawPanel.vehiclePoints.remove(index);
-        frame.drawPanel.imageList.remove(index);
-        frame.drawPanel.imageFileNames.remove(index);
     }
 
     // Calls the gas method for each vehicle once
     public void gas(int amount) {
-        simulator.gasAll(amount);
+        simulation.gasAll(amount);
     }
 
     // Brake all vehicles
     public void brake(int amount) {
-        simulator.brakeAll(amount);
+        simulation.brakeAll(amount);
     }
 
     // Start all vehicles
     public void startAllVehicles() {
-        simulator.startAll();
+        simulation.startAll();
     }
 
     // Stop all vehicles
     public void stopAllVehicles() {
-        simulator.stopAll();
+        simulation.stopAll();
     }
 
     // Turn turbo on (only Saab)
     public void turboOn() {
-        simulator.turboOnAllSaab();
+        simulation.turboOnAllSaab();
     }
 
     // Turn turbo off (only Saab)
     public void turboOff() {
-        simulator.turboOffAllSaab();
+        simulation.turboOffAllSaab();
     }
 
     // Lift bed (only Scania)
     public void liftBed() {
-        simulator.liftBedsAllScania();
+        simulation.liftBedsAllScania();
     }
 
     // Lower bed (only Scania)
     public void lowerBed() {
-        simulator.lowerBedsAllScania();
+        simulation.lowerBedsAllScania();
     }
 
     // Turn all vehicles left
     public void turnLeft() {
-        simulator.turnLeftAll();
+        simulation.turnLeftAll();
     }
 
     // Turn all vehicles right
     public void turnRight() {
-        simulator.turnRightAll();
+        simulation.turnRightAll();
     }
 
     // returns all vehicles
     public ArrayList<Vehicle> getVehicles() {
-        return simulator.getVehicles();
+        return simulation.getVehicles();
     }
 }

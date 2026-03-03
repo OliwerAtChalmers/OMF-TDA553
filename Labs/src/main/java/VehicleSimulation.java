@@ -1,9 +1,8 @@
 import java.awt.*;
 import java.util.ArrayList;
-import java.util.List;
 import java.util.Objects;
 
-public class VehicleSimulator {
+public class VehicleSimulation {
     private final int IMAGE_HEIGHT = 100;
     private final int IMAGE_WIDTH = 200;
     private final int SCREEN_OFFSET = 220;
@@ -14,10 +13,7 @@ public class VehicleSimulator {
     private final int xMax = worldWidth - IMAGE_WIDTH / 2;
     private final int yMax = worldHeight - IMAGE_HEIGHT - SCREEN_OFFSET;
 
-    private ArrayList<Vehicle> vehicles = new ArrayList<>();
-    private ArrayList<Integer> stashedVehicles = new ArrayList<>();
-
-
+    private final ArrayList<Vehicle> vehicles = new ArrayList<>();
     private Point workshopPoint = new Point(0, 0);
 
     public void setWorkshopPoint(Point workshopPoint) {
@@ -42,9 +38,7 @@ public class VehicleSimulator {
         return vehicles;
     }
 
-    public List<State> tick() {
-        stashedVehicles.clear();
-
+    public SimulationSnapshot tick() {
         for (int i = vehicles.size() - 1; i >= 0; i--) {
             Vehicle vehicle = vehicles.get(i);
             vehicle.move();
@@ -55,22 +49,21 @@ public class VehicleSimulator {
             double dy = (int) Math.round(vehicle.getPosition().getY()) - workshopPoint.y;
             if (Math.sqrt(dx * dx + dy * dy) <= GARAGE_RADIUS && Objects.equals(vehicle.getModelName(), "Volvo240")) {
                 vehicles.remove(i);
-                stashedVehicles.add(i);
             }
         }
 
-        ArrayList<State> states = new ArrayList<>();
+        ArrayList<VehicleState> states = new ArrayList<>();
         for (Vehicle vehicle : vehicles) {
-            states.add(new State(
+            states.add(new VehicleState(
                     vehicle.getModelName(),
                     (int) Math.round(vehicle.getPosition().getX()),
-                    (int) Math.round(vehicle.getPosition().getY()),
-                    vehicle.getDirection()
+                    (int) Math.round(vehicle.getPosition().getY())
             ));
         }
 
-        return states;
+        return new SimulationSnapshot(states);
     }
+
     private void checkBorders(Vehicle vehicle) {
         int x = (int) Math.round(vehicle.getPosition().getX());
         int y = (int) Math.round(vehicle.getPosition().getY());
@@ -90,12 +83,6 @@ public class VehicleSimulator {
             vehicle.setPosition((int) (vehicle.getPosition().getX()), yMax);
             vehicle.setDirection(-vehicle.getDirection());
         }
-    }
-
-    public ArrayList<Integer> consumeRemovedVehicles() {
-        ArrayList<Integer> indices = new ArrayList<>(stashedVehicles);
-        stashedVehicles.clear();
-        return indices;
     }
 
     public void gasAll(int amount) {

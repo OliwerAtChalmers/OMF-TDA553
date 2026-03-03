@@ -4,6 +4,10 @@ import javax.swing.event.ChangeListener;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.image.BufferedImage;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
 
 /**
  * This class represents the full view of the MVC pattern of your vehicle simulator.
@@ -14,13 +18,13 @@ import java.awt.event.ActionListener;
  **/
 
 public class VehicleView extends JFrame{
-    private static int X;
-    private static int Y;
+    private final int width;
+    private final int height;
 
     // The controller member
     VehicleController vehicleC;
 
-    DrawPanel drawPanel = new DrawPanel(X, Y-240);
+    DrawPanel drawPanel;
 
     JPanel controlPanel = new JPanel();
 
@@ -43,8 +47,10 @@ public class VehicleView extends JFrame{
     JButton stopButton = new JButton("Stop all vehicles");
 
     // Constructor
-    public VehicleView(String framename, VehicleController cc){
+    public VehicleView(String framename, VehicleController cc, int width, int height){
         this.vehicleC = cc;
+        this.width = width;
+        this.height = height;
         initComponents(framename);
     }
 
@@ -52,19 +58,22 @@ public class VehicleView extends JFrame{
     private void initComponents(String title) {
 
         this.setTitle(title);
-        this.setPreferredSize(new Dimension(X,Y));
+        this.setPreferredSize(new Dimension(width, height));
         this.setLayout(new FlowLayout(FlowLayout.LEFT, 0, 0));
 
+        drawPanel = new DrawPanel(width, height - 240);
         this.add(drawPanel);
 
-        // Adds vehicles to points and images
-        for (int i = 0; i < vehicleC.getVehicles().size(); i++) {
-            drawPanel.vehiclePoints.add(new Point());
-            drawPanel.imageFileNames.add(vehicleC.getVehicles().get(i).getModelName() + ".jpg");
+        List<String> modelNames = new ArrayList<>();
+        for (Vehicle vehicle : vehicleC.getVehicles()) {
+            modelNames.add(vehicle.getModelName());
         }
 
-        //initializes all images
-        drawPanel.initImages();
+        SpriteLoader spriteLoader = new SpriteLoader("/pics/");
+        Map<String, BufferedImage> sprites = spriteLoader.loadSprites(modelNames);
+        BufferedImage workshopImage = spriteLoader.loadWorkshopImage();
+        drawPanel.setSprites(sprites);
+        drawPanel.setWorkshopImage(workshopImage);
 
         SpinnerModel spinnerModel =
                 new SpinnerNumberModel(0, //initial value
@@ -94,20 +103,20 @@ public class VehicleView extends JFrame{
         controlPanel.add(lowerBedButton, 5);
         controlPanel.add(turnLeftButton, 6);
         controlPanel.add(turnRightButton, 7);
-        controlPanel.setPreferredSize(new Dimension((X/2)+4, 200));
+        controlPanel.setPreferredSize(new Dimension((width / 2) + 4, 200));
         this.add(controlPanel);
         controlPanel.setBackground(Color.CYAN);
 
 
         startButton.setBackground(Color.blue);
         startButton.setForeground(Color.green);
-        startButton.setPreferredSize(new Dimension(X/5-15,200));
+        startButton.setPreferredSize(new Dimension(width / 5 - 15, 200));
         this.add(startButton);
 
 
         stopButton.setBackground(Color.red);
         stopButton.setForeground(Color.black);
-        stopButton.setPreferredSize(new Dimension(X/5-15,200));
+        stopButton.setPreferredSize(new Dimension(width / 5 - 15, 200));
         this.add(stopButton);
 
         // This actionListener is for the gas button only
@@ -196,10 +205,12 @@ public class VehicleView extends JFrame{
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     }
 
-    public void setScreenWidth(int width){
-        X = width;
+    public Point getWorkshopPoint() {
+        return drawPanel.getWorkshopPoint();
     }
-    public void setScreenHeight(int height){
-        Y = height;
+
+    public void render(SimulationSnapshot snapshot) {
+        drawPanel.setVehicleStates(snapshot.getVehicleStates());
+        drawPanel.repaint();
     }
 }
