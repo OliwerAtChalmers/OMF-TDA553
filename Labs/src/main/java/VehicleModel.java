@@ -3,7 +3,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-public class VehicleSimulator {
+public class VehicleModel {
     private final int IMAGE_HEIGHT = 100;
     private final int IMAGE_WIDTH = 200;
     private final int SCREEN_OFFSET = 220;
@@ -15,7 +15,6 @@ public class VehicleSimulator {
     private final int yMax = worldHeight - IMAGE_HEIGHT - SCREEN_OFFSET;
 
     private ArrayList<Vehicle> vehicles = new ArrayList<>();
-    private ArrayList<Integer> stashedVehicles = new ArrayList<>();
 
 
     private Point workshopPoint = new Point(0, 0);
@@ -24,10 +23,6 @@ public class VehicleSimulator {
         if (workshopPoint != null) {
             this.workshopPoint = workshopPoint;
         }
-    }
-
-    public void addVehicle(Vehicle vehicle) {
-        vehicles.add(vehicle);
     }
 
     public int getWorldHeight() {
@@ -43,7 +38,7 @@ public class VehicleSimulator {
     }
 
     public List<State> tick() {
-        stashedVehicles.clear();
+        // stashedVehicles.clear();
 
         for (int i = vehicles.size() - 1; i >= 0; i--) {
             Vehicle vehicle = vehicles.get(i);
@@ -55,7 +50,6 @@ public class VehicleSimulator {
             double dy = (int) Math.round(vehicle.getPosition().getY()) - workshopPoint.y;
             if (Math.sqrt(dx * dx + dy * dy) <= GARAGE_RADIUS && Objects.equals(vehicle.getModelName(), "Volvo240")) {
                 vehicles.remove(i);
-                stashedVehicles.add(i);
             }
         }
 
@@ -90,12 +84,6 @@ public class VehicleSimulator {
             vehicle.setPosition((int) (vehicle.getPosition().getX()), yMax);
             vehicle.setDirection(-vehicle.getDirection());
         }
-    }
-
-    public ArrayList<Integer> consumeRemovedVehicles() {
-        ArrayList<Integer> indices = new ArrayList<>(stashedVehicles);
-        stashedVehicles.clear();
-        return indices;
     }
 
     public void gasAll(int amount) {

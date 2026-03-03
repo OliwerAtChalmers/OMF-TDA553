@@ -14,8 +14,10 @@ import java.awt.event.ActionListener;
  **/
 
 public class VehicleView extends JFrame{
-    private static int X;
-    private static int Y;
+    private static int X = 800;
+    private static int Y = 800;
+
+    private int counter = 0;
 
     // The controller member
     VehicleController vehicleC;
@@ -42,6 +44,9 @@ public class VehicleView extends JFrame{
     JButton startButton = new JButton("Start all vehicles");
     JButton stopButton = new JButton("Stop all vehicles");
 
+    JButton addCarButton = new JButton("Add car");
+    JButton removeCarButton = new JButton("Remove car");
+
     // Constructor
     public VehicleView(String framename, VehicleController cc){
         this.vehicleC = cc;
@@ -56,15 +61,6 @@ public class VehicleView extends JFrame{
         this.setLayout(new FlowLayout(FlowLayout.LEFT, 0, 0));
 
         this.add(drawPanel);
-
-        // Adds vehicles to points and images
-        for (int i = 0; i < vehicleC.getVehicles().size(); i++) {
-            drawPanel.vehiclePoints.add(new Point());
-            drawPanel.imageFileNames.add(vehicleC.getVehicles().get(i).getModelName() + ".jpg");
-        }
-
-        //initializes all images
-        drawPanel.initImages();
 
         SpinnerModel spinnerModel =
                 new SpinnerNumberModel(0, //initial value
@@ -94,6 +90,10 @@ public class VehicleView extends JFrame{
         controlPanel.add(lowerBedButton, 5);
         controlPanel.add(turnLeftButton, 6);
         controlPanel.add(turnRightButton, 7);
+
+        controlPanel.add(addCarButton, 8);
+        controlPanel.add(removeCarButton, 9);
+
         controlPanel.setPreferredSize(new Dimension((X/2)+4, 200));
         this.add(controlPanel);
         controlPanel.setBackground(Color.CYAN);
@@ -180,6 +180,23 @@ public class VehicleView extends JFrame{
             @Override
             public void actionPerformed(ActionEvent e) {
                 vehicleC.turnRight();
+            }
+        });
+
+        addCarButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                counter++;
+                if (counter % 3 == 0) {vehicleC.addVehicle(new Saab95());}
+                else if ((counter % 3 == 1)) {vehicleC.addVehicle(new Volvo240());}
+                else vehicleC.addVehicle(new Scania());
+            }
+        });
+
+        removeCarButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                vehicleC.removeVehicle(vehicleC.simulator.getVehicles().size() - 1);
             }
         });
 

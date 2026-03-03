@@ -1,4 +1,5 @@
 import javax.swing.*;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
@@ -20,7 +21,7 @@ public class VehicleController {
 
     // The frame that represents this instance View of the MVC pattern
     VehicleView frame;
-    VehicleSimulator simulator = new VehicleSimulator();
+    VehicleModel simulator = new VehicleModel();
 
     //methods:
 
@@ -28,20 +29,8 @@ public class VehicleController {
         // Instance of this class
         VehicleController cc = new VehicleController();
 
-
-        cc.simulator.addVehicle(new Volvo240());
-        cc.simulator.addVehicle(new Saab95());
-        cc.simulator.addVehicle(new Scania());
-        cc.simulator.addVehicle(new Saab95());
-
-        for(int i = 0; i < cc.simulator.getVehicles().size(); i++) {
-            cc.simulator.getVehicles().get(i).setPosition(0, i*100);
-        }
-
         // Start a new view and send a reference of self
         cc.frame = new VehicleView("VehicleSim 1.0", cc);
-        cc.frame.setScreenHeight(cc.simulator.getWorldHeight());
-        cc.frame.setScreenWidth(cc.simulator.getWorldWidth());
         cc.simulator.setWorkshopPoint(cc.frame.drawPanel.volvoWorkshopPoint);
 
         // Start the timer
@@ -49,31 +38,37 @@ public class VehicleController {
     }
 
     /* Each step the TimerListener moves all the vehicles in the list and tells the
-    * view to update its images. Change this method to your needs.
-    * */
+     * view to update its images. Change this method to your needs.
+     * */
     private class TimerListener implements ActionListener {
         public void actionPerformed(ActionEvent e) {
             ArrayList<State> states = new ArrayList<>(simulator.tick());
             for (int i = 0; i < states.size(); i++) {
                 // Gets a vehicle
                 State state = states.get(i);
-                frame.drawPanel.moveit(i, state.getX(), state.getY());
+                moveIt(i, state.getX(), state.getY());
             }
 
             frame.drawPanel.repaint();
-
-            ArrayList<Integer> indicesToRemove = new ArrayList<>(simulator.consumeRemovedVehicles());
-            for (int index : indicesToRemove) {
-                removeVehicle(index);
-            }
         }
     }
 
     // Helper function to remove vehicles across parallel lists
-    private void removeVehicle(int index) {
+    public void removeVehicle(int index) {
+        if (index < 0)
+            return;
+        getVehicles().remove(index);
         frame.drawPanel.vehiclePoints.remove(index);
         frame.drawPanel.imageList.remove(index);
         frame.drawPanel.imageFileNames.remove(index);
+    }
+
+    public void addVehicle(Vehicle vehicle) {
+        if(getVehicles().size() == 10) {return;}
+        getVehicles().add(vehicle);
+        frame.drawPanel.vehiclePoints.add(new Point());
+        frame.drawPanel.imageFileNames.add(getVehicles().getLast().getModelName() + ".jpg");
+        frame.drawPanel.initImages();
     }
 
     // Calls the gas method for each vehicle once
@@ -130,4 +125,11 @@ public class VehicleController {
     public ArrayList<Vehicle> getVehicles() {
         return simulator.getVehicles();
     }
+
+    void moveIt(int vehiclePointIndex, int x, int y){
+        Point vp = frame.drawPanel.vehiclePoints.get(vehiclePointIndex);
+        vp.x = x;
+        vp.y = y;
+    }
+
 }

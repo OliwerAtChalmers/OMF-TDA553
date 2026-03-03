@@ -1,8 +1,6 @@
-import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.image.BufferedImage;
-import java.io.IOException;
 import java.util.ArrayList;
 
 // This panel represents the animated part of the view with the vehicle images.
@@ -15,12 +13,6 @@ public class DrawPanel extends JPanel{
 
     BufferedImage volvoWorkshopImage;
     Point volvoWorkshopPoint = new Point(300,300);
-
-    void moveit(int vehiclePointIndex, int x, int y){
-        Point vp = vehiclePoints.get(vehiclePointIndex);
-        vp.x = x;
-        vp.y = y;
-    }
 
     // Initializes the panel and reads the images
     public DrawPanel(int x, int y) {
