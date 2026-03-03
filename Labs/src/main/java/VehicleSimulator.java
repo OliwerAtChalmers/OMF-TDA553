@@ -10,7 +10,7 @@ public class VehicleSimulator {
     private final int GARAGE_RADIUS = 30;
 
     private final ArrayList<Vehicle> vehicles = new ArrayList<>();
-    private final ArrayList<Integer> removedIndices = new ArrayList<>();
+    private final ArrayList<Integer> stashedVehicles = new ArrayList<>();
 
     private int worldWidth;
     private int worldHeight;
@@ -35,8 +35,8 @@ public class VehicleSimulator {
         return vehicles;
     }
 
-    public List<VehicleState> step() {
-        removedIndices.clear();
+    public List<State> tick() {
+        stashedVehicles.clear();
 
         for (int i = vehicles.size() - 1; i >= 0; i--) {
             Vehicle vehicle = vehicles.get(i);
@@ -67,13 +67,13 @@ public class VehicleSimulator {
             double dy = y - workshopPoint.y;
             if (Math.sqrt(dx * dx + dy * dy) <= GARAGE_RADIUS && Objects.equals(vehicle.getModelName(), "Volvo240")) {
                 vehicles.remove(i);
-                removedIndices.add(i);
+                stashedVehicles.add(i);
             }
         }
 
-        ArrayList<VehicleState> states = new ArrayList<>();
+        ArrayList<State> states = new ArrayList<>();
         for (Vehicle vehicle : vehicles) {
-            states.add(new VehicleState(
+            states.add(new State(
                     vehicle.getModelName(),
                     (int) Math.round(vehicle.getPosition().getX()),
                     (int) Math.round(vehicle.getPosition().getY()),
@@ -84,9 +84,9 @@ public class VehicleSimulator {
         return states;
     }
 
-    public List<Integer> consumeRemovedIndices() {
-        ArrayList<Integer> indices = new ArrayList<>(removedIndices);
-        removedIndices.clear();
+    public ArrayList<Integer> consumeRemovedVehicles() {
+        ArrayList<Integer> indices = new ArrayList<>(stashedVehicles);
+        stashedVehicles.clear();
         return indices;
     }
 

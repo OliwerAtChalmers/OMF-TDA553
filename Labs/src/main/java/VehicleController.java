@@ -49,15 +49,16 @@ public class VehicleController {
     * */
     private class TimerListener implements ActionListener {
         public void actionPerformed(ActionEvent e) {
-            ArrayList<VehicleState> states = new ArrayList<>(simulator.step());
+            ArrayList<State> states = new ArrayList<>(simulator.tick());
             for (int i = 0; i < states.size(); i++) {
-                VehicleState state = states.get(i);
+                // Gets a vehicle
+                State state = states.get(i);
                 frame.drawPanel.moveit(i, state.getX(), state.getY());
             }
 
             frame.drawPanel.repaint();
 
-            ArrayList<Integer> indicesToRemove = new ArrayList<>(simulator.consumeRemovedIndices());
+            ArrayList<Integer> indicesToRemove = new ArrayList<>(simulator.consumeRemovedVehicles());
             for (int index : indicesToRemove) {
                 removeVehicle(index);
             }
@@ -65,63 +66,64 @@ public class VehicleController {
     }
 
     // Helper function to remove vehicles across parallel lists
-    void removeVehicle(int index) {
+    private void removeVehicle(int index) {
         frame.drawPanel.vehiclePoints.remove(index);
         frame.drawPanel.imageList.remove(index);
         frame.drawPanel.imageFileNames.remove(index);
     }
 
     // Calls the gas method for each vehicle once
-    void gas(int amount) {
+    public void gas(int amount) {
         simulator.gasAll(amount);
     }
 
     // Brake all vehicles
-    void brake(int amount) {
+    public void brake(int amount) {
         simulator.brakeAll(amount);
     }
 
     // Start all vehicles
-    void startAllVehicles() {
+    public void startAllVehicles() {
         simulator.startAll();
     }
 
     // Stop all vehicles
-    void stopAllVehicles() {
+    public void stopAllVehicles() {
         simulator.stopAll();
     }
 
     // Turn turbo on (only Saab)
-    void turboOn() {
+    public void turboOn() {
         simulator.turboOnAllSaab();
     }
 
     // Turn turbo off (only Saab)
-    void turboOff() {
+    public void turboOff() {
         simulator.turboOffAllSaab();
     }
 
     // Lift bed (only Scania)
-    void liftBed() {
+    public void liftBed() {
         simulator.liftBedsAllScania();
     }
 
     // Lower bed (only Scania)
-    void lowerBed() {
+    public void lowerBed() {
         simulator.lowerBedsAllScania();
     }
 
     // Turn all vehicles left
-    void turnLeft() {
+    public void turnLeft() {
         simulator.turnLeftAll();
     }
 
     // Turn all vehicles right
-    void turnRight() {
+    public void turnRight() {
         simulator.turnRightAll();
     }
 
-    ArrayList<Vehicle> getVehicles() {
+    // returns all vehicles
+    public ArrayList<Vehicle> getVehicles() {
         return simulator.getVehicles();
     }
 }
