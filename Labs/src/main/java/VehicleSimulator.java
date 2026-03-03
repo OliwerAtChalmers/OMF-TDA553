@@ -9,16 +9,22 @@ public class VehicleSimulator {
     private final int SCREEN_OFFSET = 220;
     private final int GARAGE_RADIUS = 30;
 
+    private int worldWidth;
+    private int worldHeight;
+    private int xMax;
+    private int yMax;
+
     private final ArrayList<Vehicle> vehicles = new ArrayList<>();
     private final ArrayList<Integer> stashedVehicles = new ArrayList<>();
 
-    private int worldWidth;
-    private int worldHeight;
+
     private Point workshopPoint = new Point(0, 0);
 
     public void setWorldSize(int width, int height) {
         this.worldWidth = width;
         this.worldHeight = height;
+        xMax = worldWidth - IMAGE_WIDTH / 2;
+        yMax = worldHeight - IMAGE_HEIGHT - SCREEN_OFFSET;
     }
 
     public void setWorkshopPoint(Point workshopPoint) {
@@ -42,29 +48,10 @@ public class VehicleSimulator {
             Vehicle vehicle = vehicles.get(i);
             vehicle.move();
 
-            int x = (int) Math.round(vehicle.getPosition().getX());
-            int y = (int) Math.round(vehicle.getPosition().getY());
+            checkBorders(vehicle);
 
-            int xMax = worldWidth - IMAGE_WIDTH / 2;
-            int yMax = worldHeight - IMAGE_HEIGHT - SCREEN_OFFSET;
-            if (x < 0) {
-                vehicle.setDirection(180 - vehicle.getDirection());
-                vehicle.setPosition(0, (int) (vehicle.getPosition().getY()));
-            } else if (x > xMax) {
-                vehicle.setPosition(xMax, (int) (vehicle.getPosition().getY()));
-                vehicle.setDirection(180 - vehicle.getDirection());
-            }
-
-            if (y < 0) {
-                vehicle.setPosition((int) (vehicle.getPosition().getX()), 0);
-                vehicle.setDirection(-vehicle.getDirection());
-            } else if (y > yMax) {
-                vehicle.setPosition((int) (vehicle.getPosition().getX()), yMax);
-                vehicle.setDirection(-vehicle.getDirection());
-            }
-
-            double dx = x - workshopPoint.x;
-            double dy = y - workshopPoint.y;
+            double dx = (int) Math.round(vehicle.getPosition().getX()) - workshopPoint.x;
+            double dy = (int) Math.round(vehicle.getPosition().getY()) - workshopPoint.y;
             if (Math.sqrt(dx * dx + dy * dy) <= GARAGE_RADIUS && Objects.equals(vehicle.getModelName(), "Volvo240")) {
                 vehicles.remove(i);
                 stashedVehicles.add(i);
@@ -82,6 +69,26 @@ public class VehicleSimulator {
         }
 
         return states;
+    }
+    private void checkBorders(Vehicle vehicle) {
+        int x = (int) Math.round(vehicle.getPosition().getX());
+        int y = (int) Math.round(vehicle.getPosition().getY());
+
+        if (x < 0) {
+            vehicle.setDirection(180 - vehicle.getDirection());
+            vehicle.setPosition(0, (int) (vehicle.getPosition().getY()));
+        } else if (x > xMax) {
+            vehicle.setPosition(xMax, (int) (vehicle.getPosition().getY()));
+            vehicle.setDirection(180 - vehicle.getDirection());
+        }
+
+        if (y < 0) {
+            vehicle.setPosition((int) (vehicle.getPosition().getX()), 0);
+            vehicle.setDirection(-vehicle.getDirection());
+        } else if (y > yMax) {
+            vehicle.setPosition((int) (vehicle.getPosition().getX()), yMax);
+            vehicle.setDirection(-vehicle.getDirection());
+        }
     }
 
     public ArrayList<Integer> consumeRemovedVehicles() {
