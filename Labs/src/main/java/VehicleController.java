@@ -31,6 +31,7 @@ public class VehicleController {
         cc.simulator.addVehicle(new Volvo240());
         cc.simulator.addVehicle(new Saab95());
         cc.simulator.addVehicle(new Scania());
+        cc.simulator.addVehicle(new Saab95());
 
         for(int i = 0; i < cc.simulator.getVehicles().size(); i++) {
             cc.simulator.getVehicles().get(i).setPosition(0, i*100);

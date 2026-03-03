@@ -30,14 +30,8 @@ public class DrawPanel extends JPanel{
     }
 
     public void initImages(){
-        try {
-            for(String fileName: imageFileNames)
-                imageList.add(ImageIO.read(DrawPanel.class.getResourceAsStream("/pics/" + fileName)));
-            volvoWorkshopImage = ImageIO.read(DrawPanel.class.getResourceAsStream("/pics/VolvoBrand.jpg"));
-        } catch (IOException ex)
-        {
-            ex.printStackTrace();
-        }
+        imageList = SpriteLoader.loadSprites(imageFileNames);
+        volvoWorkshopImage = SpriteLoader.load("volvoBrand.jpg");
     }
 
     // This method is called each time the panel updates/refreshes/repaints itself
