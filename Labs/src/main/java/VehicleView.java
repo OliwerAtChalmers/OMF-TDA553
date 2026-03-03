@@ -14,8 +14,8 @@ import java.awt.event.ActionListener;
  **/
 
 public class VehicleView extends JFrame{
-    private static final int X = 800;
-    private static final int Y = 800;
+    private static int X = 800;
+    private static int Y = 800;
 
     // The controller member
     VehicleController vehicleC;
@@ -196,10 +196,10 @@ public class VehicleView extends JFrame{
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     }
 
-    public int getScreenWidth(){
-        return X;
+    public void setScreenWidth(int width){
+        X = width;
     }
-    public int getScreenHeight(){
-        return Y;
+    public void setScreenHeight(int height){
+        Y = height;
     }
 }

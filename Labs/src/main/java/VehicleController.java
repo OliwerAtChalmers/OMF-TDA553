@@ -28,6 +28,7 @@ public class VehicleController {
         // Instance of this class
         VehicleController cc = new VehicleController();
 
+
         cc.simulator.addVehicle(new Volvo240());
         cc.simulator.addVehicle(new Saab95());
         cc.simulator.addVehicle(new Scania());
@@ -36,9 +37,11 @@ public class VehicleController {
         for(int i = 0; i < cc.simulator.getVehicles().size(); i++) {
             cc.simulator.getVehicles().get(i).setPosition(0, i*100);
         }
+
         // Start a new view and send a reference of self
         cc.frame = new VehicleView("VehicleSim 1.0", cc);
-        cc.simulator.setWorldSize(cc.frame.getScreenWidth(), cc.frame.getScreenHeight());
+        cc.frame.setScreenHeight(cc.simulator.getWorldHeight());
+        cc.frame.setScreenWidth(cc.simulator.getWorldWidth());
         cc.simulator.setWorkshopPoint(cc.frame.drawPanel.volvoWorkshopPoint);
 
         // Start the timer

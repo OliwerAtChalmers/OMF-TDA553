@@ -9,23 +9,16 @@ public class VehicleSimulator {
     private final int SCREEN_OFFSET = 220;
     private final int GARAGE_RADIUS = 30;
 
-    private int worldWidth;
-    private int worldHeight;
-    private int xMax;
-    private int yMax;
+    private final int worldWidth = 800;
+    private final int worldHeight = 800;
+    private final int xMax = worldWidth - IMAGE_WIDTH / 2;
+    private final int yMax = worldHeight - IMAGE_HEIGHT - SCREEN_OFFSET;
 
-    private final ArrayList<Vehicle> vehicles = new ArrayList<>();
-    private final ArrayList<Integer> stashedVehicles = new ArrayList<>();
+    private ArrayList<Vehicle> vehicles = new ArrayList<>();
+    private ArrayList<Integer> stashedVehicles = new ArrayList<>();
 
 
     private Point workshopPoint = new Point(0, 0);
-
-    public void setWorldSize(int width, int height) {
-        this.worldWidth = width;
-        this.worldHeight = height;
-        xMax = worldWidth - IMAGE_WIDTH / 2;
-        yMax = worldHeight - IMAGE_HEIGHT - SCREEN_OFFSET;
-    }
 
     public void setWorkshopPoint(Point workshopPoint) {
         if (workshopPoint != null) {
@@ -35,6 +28,14 @@ public class VehicleSimulator {
 
     public void addVehicle(Vehicle vehicle) {
         vehicles.add(vehicle);
+    }
+
+    public int getWorldHeight() {
+        return worldHeight;
+    }
+
+    public int getWorldWidth(){
+        return worldWidth;
     }
 
     public ArrayList<Vehicle> getVehicles() {
