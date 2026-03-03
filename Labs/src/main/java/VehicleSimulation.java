@@ -5,15 +5,16 @@ import java.util.Objects;
 public class VehicleSimulation {
     private final int IMAGE_HEIGHT = 100;
     private final int IMAGE_WIDTH = 200;
-    private final int SCREEN_OFFSET = 220;
+    private final int SCREEN_OFFSET = 240;
     private final int GARAGE_RADIUS = 30;
+    private final int MAX_CARS = 10;
 
     private final int worldWidth = 800;
     private final int worldHeight = 800;
     private final int xMax = worldWidth - IMAGE_WIDTH / 2;
     private final int yMax = worldHeight - IMAGE_HEIGHT - SCREEN_OFFSET;
 
-    private static final String WORKSHOP_STATE_NAME = "Workshop";
+    private static final String WORKSHOP_STATE_NAME = "VolvoBrand";
 
     private final ArrayList<Vehicle> vehicles = new ArrayList<>();
     private Point workshopPoint = new Point(300, 300);
@@ -24,8 +25,10 @@ public class VehicleSimulation {
         }
     }
 
-    public void addVehicle(Vehicle vehicle) {
-        vehicles.add(vehicle);
+    public void addVehicle(Vehicle vehicle)
+    {
+        if(vehicles.size() < MAX_CARS)
+            vehicles.add(vehicle);
     }
 
     public int getWorldHeight() {
@@ -73,6 +76,7 @@ public class VehicleSimulation {
         int y = (int) Math.round(vehicle.getPosition().getY());
 
         if (x < 0) {
+
             vehicle.setDirection(180 - vehicle.getDirection());
             vehicle.setPosition(0, (int) (vehicle.getPosition().getY()));
         } else if (x > xMax) {
@@ -163,9 +167,5 @@ public class VehicleSimulation {
         if (index >= 0 && index < vehicles.size()) {
             vehicles.remove(index);
         }
-    }
-
-    public void removeVehicle(Vehicle vehicle) {
-        vehicles.remove(vehicle);
     }
 }

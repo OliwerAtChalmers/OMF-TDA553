@@ -5,6 +5,7 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -20,7 +21,7 @@ import java.util.Map;
 public class VehicleView extends JFrame{
     private final int width;
     private final int height;
-    private static final String WORKSHOP_SPRITE_KEY = "Workshop";
+    private static final String WORKSHOP_SPRITE_KEY = "VolvoBrand";
 
     // The controller member
     VehicleController vehicleC;
@@ -44,6 +45,9 @@ public class VehicleView extends JFrame{
     JButton turnLeftButton = new JButton("Turn Left");
     JButton turnRightButton = new JButton("Turn Right");
 
+    JButton addVehicleButton = new JButton("Add Vehicle");
+    JButton removeVehicleButton = new JButton("Remove Vehicle");
+
     JButton startButton = new JButton("Start all vehicles");
     JButton stopButton = new JButton("Stop all vehicles");
 
@@ -65,17 +69,9 @@ public class VehicleView extends JFrame{
         drawPanel = new DrawPanel(width, height - 240);
         this.add(drawPanel);
 
-        List<String> modelNames = new ArrayList<>();
-        for (Vehicle vehicle : vehicleC.getVehicles()) {
-            modelNames.add(vehicle.getModelName());
-        }
-
+        ArrayList<String> modelNames = loadImageNames();
         SpriteLoader spriteLoader = new SpriteLoader("/pics/");
         Map<String, BufferedImage> sprites = spriteLoader.loadSprites(modelNames);
-        BufferedImage workshopImage = spriteLoader.loadWorkshopImage();
-        if (workshopImage != null) {
-            sprites.put(WORKSHOP_SPRITE_KEY, workshopImage);
-        }
         drawPanel.setSprites(sprites);
 
         SpinnerModel spinnerModel =
@@ -106,20 +102,22 @@ public class VehicleView extends JFrame{
         controlPanel.add(lowerBedButton, 5);
         controlPanel.add(turnLeftButton, 6);
         controlPanel.add(turnRightButton, 7);
-        controlPanel.setPreferredSize(new Dimension((width / 2) + 4, 200));
+        controlPanel.add(addVehicleButton, 8);
+        controlPanel.add(removeVehicleButton, 9);
+        controlPanel.setPreferredSize(new Dimension((width / 2) + 130, 200));
         this.add(controlPanel);
         controlPanel.setBackground(Color.CYAN);
 
 
         startButton.setBackground(Color.blue);
         startButton.setForeground(Color.green);
-        startButton.setPreferredSize(new Dimension(width / 5 - 15, 200));
+        startButton.setPreferredSize(new Dimension(width / 8 - 15, 200));
         this.add(startButton);
 
 
         stopButton.setBackground(Color.red);
         stopButton.setForeground(Color.black);
-        stopButton.setPreferredSize(new Dimension(width / 5 - 15, 200));
+        stopButton.setPreferredSize(new Dimension(width / 8 - 15, 200));
         this.add(stopButton);
 
         // This actionListener is for the gas button only
@@ -166,7 +164,6 @@ public class VehicleView extends JFrame{
             }
         });
 
-
         liftBedButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -195,6 +192,20 @@ public class VehicleView extends JFrame{
             }
         });
 
+        addVehicleButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                vehicleC.addVehicle();
+            }
+        });
+
+        removeVehicleButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                vehicleC.removeVehicle();
+            }
+        });
+
         // Make the frame pack all it's components by respecting the sizes if possible.
         this.pack();
 
@@ -211,5 +222,25 @@ public class VehicleView extends JFrame{
     public void render(List<State> states) {
         drawPanel.setStates(states);
         drawPanel.repaint();
+    }
+
+    // Helper function to load all images
+    private ArrayList<String> loadImageNames(){
+        String folderPath = "src/main/resources/pics/";
+        File folder = new File(folderPath);
+        ArrayList<String> fileNames = new ArrayList<>();
+
+        if (folder.exists() && folder.isDirectory()) {
+            File[] files = folder.listFiles();
+
+            if (files != null) {
+                for (File file : files) {
+                    if (file.isFile()) {
+                        fileNames.add((file.getName()));
+                    }
+                }
+            }
+        }
+        return fileNames;
     }
 }

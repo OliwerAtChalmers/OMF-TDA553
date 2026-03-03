@@ -6,19 +6,18 @@ import java.util.List;
 import java.util.Map;
 
 public class SpriteLoader {
-    private static final String WORKSHOP_IMAGE = "VolvoBrand.jpg";
     private final String basePath;
 
     public SpriteLoader(String basePath) {
         this.basePath = basePath;
     }
 
-    public Map<String, BufferedImage> loadSprites(List<String> modelNames) {
+    public Map<String, BufferedImage> loadSprites(List<String> fileNames) {
         Map<String, BufferedImage> sprites = new HashMap<>();
-        for (String modelName : modelNames) {
-            BufferedImage image = loadImage(modelName + ".jpg");
+        for (String fileName : fileNames) {
+            BufferedImage image = loadImage(fileName);
             if (image != null) {
-                sprites.put(modelName, image);
+                sprites.put(fileName, image);
             }
         }
         return sprites;
@@ -31,9 +30,5 @@ public class SpriteLoader {
             ex.printStackTrace();
             return null;
         }
-    }
-
-    public BufferedImage loadWorkshopImage() {
-        return loadImage(WORKSHOP_IMAGE);
     }
 }

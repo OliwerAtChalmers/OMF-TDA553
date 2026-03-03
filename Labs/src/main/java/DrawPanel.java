@@ -1,10 +1,8 @@
 import javax.swing.*;
 import java.awt.*;
 import java.awt.image.BufferedImage;
-import java.util.ArrayList;
-import java.util.HashMap;
+import java.util.*;
 import java.util.List;
-import java.util.Map;
 
 // This panel represents the animated part of the view with the vehicle images.
 
@@ -29,13 +27,12 @@ public class DrawPanel extends JPanel{
         this.states = states;
     }
 
-
     // This method is called each time the panel updates/refreshes/repaints itself
     @Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
         for (State state : states) {
-            BufferedImage sprite = sprites.get(state.getModelName());
+            BufferedImage sprite = sprites.get(state.getModelName() + ".jpg");
             if (sprite != null) {
                 g.drawImage(sprite, state.getX(), state.getY(), null);
             }

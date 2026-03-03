@@ -12,34 +12,22 @@ import java.util.ArrayList;
 public class VehicleController {
     // member fields:
 
+
     // The delay (ms) corresponds to 20 updates a sec (hz)
     private final int delay = 50;
     // The timer is started with a listener (see below) that executes the statements
     // each step between delays.
     private Timer timer = new Timer(delay, new TimerListener());
 
-    // The frame that represents this instance View of the MVC pattern
-    VehicleView frame;
+    VehicleView vehicleView;
     VehicleSimulation simulation = new VehicleSimulation();
-
-    //methods:
 
     public static void main(String[] args) {
         // Instance of this class
         VehicleController cc = new VehicleController();
 
-
-        cc.simulation.addVehicle(new Volvo240());
-        cc.simulation.addVehicle(new Saab95());
-        cc.simulation.addVehicle(new Scania());
-        cc.simulation.addVehicle(new Saab95());
-
-        for(int i = 0; i < cc.simulation.getVehicles().size(); i++) {
-            cc.simulation.getVehicles().get(i).setPosition(0, i*100);
-        }
-
         // Start a new view and send a reference of self
-        cc.frame = new VehicleView(
+        cc.vehicleView = new VehicleView(
                 "VehicleSim 1.0",
                 cc,
                 cc.simulation.getWorldWidth(),
@@ -50,12 +38,13 @@ public class VehicleController {
         cc.timer.start();
     }
 
-    /* Each step the TimerListener moves all the vehicles in the list and tells the
-    * view to update its images. Change this method to your needs.
-    * */
+    /*  Each step the TimerListener moves all the vehicles in the list and tells the
+        view to update its images. Change this method to your needs.
+    */
     private class TimerListener implements ActionListener {
         public void actionPerformed(ActionEvent e) {
-            frame.render(simulation.tick());
+            ArrayList<State> states = simulation.tick();
+            vehicleView.render(states);
         }
     }
 
@@ -109,20 +98,19 @@ public class VehicleController {
         simulation.turnRightAll();
     }
 
-    public void addVehicle(Vehicle vehicle) {
-        simulation.addVehicle(vehicle);
+    public void addVehicle() {
+        int r = (int) (Math.random() * (3 - 1)) + 1;
+        Vehicle v;
+        if (r == 1)
+            v = new Volvo240();
+        else if (r == 2)
+            v = new Saab95();
+        else
+            v = new Scania();
+        simulation.addVehicle(v);
     }
 
-    public void removeVehicleAt(int index) {
-        simulation.removeVehicleAt(index);
-    }
-
-    public void removeVehicle(Vehicle vehicle) {
-        simulation.removeVehicle(vehicle);
-    }
-
-    // returns all vehicles
-    public ArrayList<Vehicle> getVehicles() {
-        return simulation.getVehicles();
+    public void removeVehicle() {
+        simulation.removeVehicleAt(simulation.getVehicles().size() - 1);
     }
 }
