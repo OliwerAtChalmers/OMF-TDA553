@@ -99,11 +99,11 @@ public class VehicleController {
     }
 
     public void addVehicle() {
-        int r = (int) (Math.random() * 2) + 1;
+        double r = Math.random() * 3;
         Vehicle v;
-        if (r == 1)
+        if (r < 1)
             v = new Volvo240();
-        else if (r == 2)
+        else if (r < 2)
             v = new Saab95();
         else
             v = new Scania();
