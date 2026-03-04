@@ -3,27 +3,19 @@ import java.util.ArrayList;
 import java.util.Objects;
 
 public class VehicleModel {
-    private final int IMAGE_HEIGHT = 100;
-    private final int IMAGE_WIDTH = 200;
-    private final int SCREEN_OFFSET = 240;
-    private final int GARAGE_RADIUS = 30;
-    private final int MAX_CARS = 10;
-
-    private final int worldWidth = 800;
-    private final int worldHeight = 800;
-    private final int xMax = worldWidth - IMAGE_WIDTH / 2;
-    private final int yMax = worldHeight - IMAGE_HEIGHT - SCREEN_OFFSET;
-
+    private static final int IMAGE_HEIGHT = 100;
+    private static final int IMAGE_WIDTH = 200;
+    private static final int SCREEN_OFFSET = 240;
+    private static final int GARAGE_RADIUS = 30;
+    private static final int MAX_CARS = 10;
+    private static final int WORLD_WIDTH = 800;
+    private static final int WORLD_HEIGHT = 800;
+    private static final int X_MAX = WORLD_WIDTH - IMAGE_WIDTH / 2;
+    private static final int Y_MAX = WORLD_HEIGHT - IMAGE_HEIGHT - SCREEN_OFFSET;
     private static final String WORKSHOP_STATE_NAME = "VolvoBrand";
 
-    private final ArrayList<Vehicle> vehicles = new ArrayList<>();
+    private ArrayList<Vehicle> vehicles = new ArrayList<>();
     private Point workshopPoint = new Point(300, 300);
-
-    public void setWorkshopPoint(Point workshopPoint) {
-        if (workshopPoint != null) {
-            this.workshopPoint = workshopPoint;
-        }
-    }
 
     public void addVehicle(Vehicle vehicle)
     {
@@ -32,11 +24,11 @@ public class VehicleModel {
     }
 
     public int getWorldHeight() {
-        return worldHeight;
+        return WORLD_HEIGHT;
     }
 
     public int getWorldWidth(){
-        return worldWidth;
+        return WORLD_WIDTH;
     }
 
     public ArrayList<Vehicle> getVehicles() {
@@ -48,7 +40,7 @@ public class VehicleModel {
             Vehicle vehicle = vehicles.get(i);
             vehicle.move();
 
-            checkBorders(vehicle);
+            isWithinBorders(vehicle);
 
             double dx = (int) Math.round(vehicle.getPosition().getX()) - workshopPoint.x;
             double dy = (int) Math.round(vehicle.getPosition().getY()) - workshopPoint.y;
@@ -71,24 +63,23 @@ public class VehicleModel {
         return states;
     }
 
-    private void checkBorders(Vehicle vehicle) {
+    private void isWithinBorders(Vehicle vehicle) {
         int x = (int) Math.round(vehicle.getPosition().getX());
         int y = (int) Math.round(vehicle.getPosition().getY());
 
         if (x < 0) {
-
             vehicle.setDirection(180 - vehicle.getDirection());
             vehicle.setPosition(0, (int) (vehicle.getPosition().getY()));
-        } else if (x > xMax) {
-            vehicle.setPosition(xMax, (int) (vehicle.getPosition().getY()));
+        } else if (x > X_MAX) {
+            vehicle.setPosition(X_MAX, (int) (vehicle.getPosition().getY()));
             vehicle.setDirection(180 - vehicle.getDirection());
         }
 
         if (y < 0) {
             vehicle.setPosition((int) (vehicle.getPosition().getX()), 0);
             vehicle.setDirection(-vehicle.getDirection());
-        } else if (y > yMax) {
-            vehicle.setPosition((int) (vehicle.getPosition().getX()), yMax);
+        } else if (y > Y_MAX) {
+            vehicle.setPosition((int) (vehicle.getPosition().getX()), Y_MAX);
             vehicle.setDirection(-vehicle.getDirection());
         }
     }
