@@ -32,7 +32,7 @@ public class DrawPanel extends JPanel{
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
         for (State state : states) {
-            BufferedImage sprite = sprites.get(state.getModelName() + ".jpg");
+            BufferedImage sprite = sprites.get(state.getName() + ".jpg");
             if (sprite != null) {
                 g.drawImage(sprite, state.getX(), state.getY(), null);
             }

@@ -20,7 +20,7 @@ public class VehicleController {
     private Timer timer = new Timer(delay, new TimerListener());
 
     VehicleView vehicleView;
-    VehicleSimulation simulation = new VehicleSimulation();
+    VehicleModel vehicleModel = new VehicleModel();
 
     public static void main(String[] args) {
         // Instance of this class
@@ -30,8 +30,8 @@ public class VehicleController {
         cc.vehicleView = new VehicleView(
                 "VehicleSim 1.0",
                 cc,
-                cc.simulation.getWorldWidth(),
-                cc.simulation.getWorldHeight()
+                cc.vehicleModel.getWorldWidth(),
+                cc.vehicleModel.getWorldHeight()
         );
 
         // Start the timer
@@ -43,63 +43,63 @@ public class VehicleController {
     */
     private class TimerListener implements ActionListener {
         public void actionPerformed(ActionEvent e) {
-            ArrayList<State> states = simulation.tick();
+            ArrayList<State> states = vehicleModel.tick();
             vehicleView.render(states);
         }
     }
 
     // Calls the gas method for each vehicle once
     public void gas(int amount) {
-        simulation.gasAll(amount);
+        vehicleModel.gasAll(amount);
     }
 
     // Brake all vehicles
     public void brake(int amount) {
-        simulation.brakeAll(amount);
+        vehicleModel.brakeAll(amount);
     }
 
     // Start all vehicles
     public void startAllVehicles() {
-        simulation.startAll();
+        vehicleModel.startAll();
     }
 
     // Stop all vehicles
     public void stopAllVehicles() {
-        simulation.stopAll();
+        vehicleModel.stopAll();
     }
 
     // Turn turbo on (only Saab)
     public void turboOn() {
-        simulation.turboOnAllSaab();
+        vehicleModel.turboOnAllSaab();
     }
 
     // Turn turbo off (only Saab)
     public void turboOff() {
-        simulation.turboOffAllSaab();
+        vehicleModel.turboOffAllSaab();
     }
 
     // Lift bed (only Scania)
     public void liftBed() {
-        simulation.liftBedsAllScania();
+        vehicleModel.liftBedsAllScania();
     }
 
     // Lower bed (only Scania)
     public void lowerBed() {
-        simulation.lowerBedsAllScania();
+        vehicleModel.lowerBedsAllScania();
     }
 
     // Turn all vehicles left
     public void turnLeft() {
-        simulation.turnLeftAll();
+        vehicleModel.turnLeftAll();
     }
 
     // Turn all vehicles right
     public void turnRight() {
-        simulation.turnRightAll();
+        vehicleModel.turnRightAll();
     }
 
     public void addVehicle() {
-        int r = (int) (Math.random() * (3 - 1)) + 1;
+        int r = (int) (Math.random() * 2) + 1;
         Vehicle v;
         if (r == 1)
             v = new Volvo240();
@@ -107,10 +107,10 @@ public class VehicleController {
             v = new Saab95();
         else
             v = new Scania();
-        simulation.addVehicle(v);
+        vehicleModel.addVehicle(v);
     }
 
     public void removeVehicle() {
-        simulation.removeVehicleAt(simulation.getVehicles().size() - 1);
+        vehicleModel.removeVehicleAt(vehicleModel.getVehicles().size() - 1);
     }
 }

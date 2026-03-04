@@ -2,7 +2,7 @@ import java.awt.*;
 import java.util.ArrayList;
 import java.util.Objects;
 
-public class VehicleSimulation {
+public class VehicleModel {
     private final int IMAGE_HEIGHT = 100;
     private final int IMAGE_WIDTH = 200;
     private final int SCREEN_OFFSET = 240;
