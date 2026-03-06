@@ -68,8 +68,8 @@ public class VehicleView extends JFrame{
         drawPanel = new DrawPanel(width, height - 240);
         this.add(drawPanel);
 
-        ArrayList<String> modelNames = loadImageNames();
         SpriteLoader spriteLoader = new SpriteLoader("/pics/");
+        ArrayList<String> modelNames = spriteLoader.loadImageNames();
         Map<String, BufferedImage> sprites = spriteLoader.loadSprites(modelNames);
         drawPanel.setSprites(sprites);
 
@@ -221,25 +221,5 @@ public class VehicleView extends JFrame{
     public void render(ArrayList<State> states) {
         drawPanel.setStates(states);
         drawPanel.repaint();
-    }
-
-    // Helper function to load all images
-    private ArrayList<String> loadImageNames(){
-        String folderPath = "src/main/resources/pics/";
-        File folder = new File(folderPath);
-        ArrayList<String> fileNames = new ArrayList<>();
-
-        if (folder.exists() && folder.isDirectory()) {
-            File[] files = folder.listFiles();
-
-            if (files != null) {
-                for (File file : files) {
-                    if (file.isFile()) {
-                        fileNames.add((file.getName()));
-                    }
-                }
-            }
-        }
-        return fileNames;
     }
 }

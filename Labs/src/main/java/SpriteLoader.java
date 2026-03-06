@@ -1,5 +1,6 @@
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
+import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -30,5 +31,24 @@ public class SpriteLoader {
             ex.printStackTrace();
             return null;
         }
+    }
+
+    public ArrayList<String> loadImageNames(){
+        String folderPath = "src/main/resources" + basePath;
+        File folder = new File(folderPath);
+        ArrayList<String> fileNames = new ArrayList<>();
+
+        if (folder.exists() && folder.isDirectory()) {
+            File[] files = folder.listFiles();
+
+            if (files != null) {
+                for (File file : files) {
+                    if (file.isFile()) {
+                        fileNames.add((file.getName()));
+                    }
+                }
+            }
+        }
+        return fileNames;
     }
 }
