@@ -80,7 +80,7 @@ public abstract class Vehicle implements Movable{
     }
 
     public Point getPosition() {
-        return position;
+        return new Point(position);
     }
 
     public void setPosition(int x, int y){
