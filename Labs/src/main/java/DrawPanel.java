@@ -9,7 +9,7 @@ import java.util.List;
 public class DrawPanel extends JPanel{
 
     private Map<String, BufferedImage> sprites = new HashMap<>();
-    private List<State> states = new ArrayList<>();
+    private ArrayList<State> states = new ArrayList<>();
 
 
     // Initializes the panel and reads the images
@@ -23,7 +23,7 @@ public class DrawPanel extends JPanel{
         this.sprites = sprites;
     }
 
-    public void setStates(List<State> states) {
+    public void setStates(ArrayList<State> states) {
         this.states = states;
     }
 
