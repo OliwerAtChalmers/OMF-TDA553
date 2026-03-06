@@ -7,7 +7,6 @@ import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.util.ArrayList;
-import java.util.List;
 import java.util.Map;
 
 /**
@@ -219,7 +218,7 @@ public class VehicleView extends JFrame{
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     }
 
-    public void render(List<State> states) {
+    public void render(ArrayList<State> states) {
         drawPanel.setStates(states);
         drawPanel.repaint();
     }

@@ -2,7 +2,6 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.util.*;
-import java.util.List;
 
 // This panel represents the animated part of the view with the vehicle images.
 

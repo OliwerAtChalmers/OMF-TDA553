@@ -1,8 +1,8 @@
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 public class SpriteLoader {
@@ -12,7 +12,7 @@ public class SpriteLoader {
         this.basePath = basePath;
     }
 
-    public Map<String, BufferedImage> loadSprites(List<String> fileNames) {
+    public Map<String, BufferedImage> loadSprites(ArrayList<String> fileNames) {
         Map<String, BufferedImage> sprites = new HashMap<>();
         for (String fileName : fileNames) {
             BufferedImage image = loadImage(fileName);
